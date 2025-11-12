@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohanasundar - UI/UX Designer & Trainer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF',
+                        accent: '#8B5CF6',
+                        dark: '#1F2937',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                        'typing': 'typing 3.5s steps(40, end), blink-caret .75s step-end infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'slide-in-left': 'slideInLeft 0.8s ease-out',
+                        'slide-in-right': 'slideInRight 0.8s ease-out',
+                        'zoom-in': 'zoomIn 0.8s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        gradient: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                        },
+                        typing: {
+                            'from': { width: '0' },
+                            'to': { width: '100%' }
+                        },
+                        'blink-caret': {
+                            'from, to': { 'border-color': 'transparent' },
+                            '50%': { 'border-color': 'white' }
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        zoomIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.5)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        .gradient-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card-hover:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .skill-bar {
+            transition: width 2s ease-in-out;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.4s ease;
+            border-radius: 10px;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        .typing-animation {
+            overflow: hidden;
+            border-right: .15em solid white;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .skill-icon {
+            transition: all 0.3s ease;
+        }
+        .skill-icon:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        .scroll-indicator {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+        .scroll-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #3B82F6;
+            border-radius: 50%;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .scroll-dot.active {
+            background-color: #1E40AF;
+            transform: scale(1.5);
+        }
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .flip-card-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+        .morph-shape {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 8s ease-in-out infinite;
+        }
+        @keyframes morph {
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            animation: float 15s infinite linear;
+        }
+        .cursor-follower {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: rgba(59, 130, 246, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+        }
+        .progress-bar {
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .popup-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .popup-overlay.active .popup-content {
+            transform: scale(1);
+        }
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6B7280;
+            transition: color 0.3s ease;
+        }
+        .popup-close:hover {
+            color: #EF4444;
+        }
+        .popup-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10B981;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 10000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast.error {
+            background: #EF4444;
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Cursor Follower -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator hidden md:block">
+        <div class="scroll-dot active" data-section="home"></div>
+        <div class="scroll-dot" data-section="about"></div>
+        <div class="scroll-dot" data-section="skills"></div>
+        <div class="scroll-dot" data-section="experience"></div>
+        <div class="scroll-dot" data-section="projects"></div>
+        <div class="scroll-dot" data-section="contact"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800 flex items-center">
+                <span class="text-gradient mr-2">M</span>ohanasundar
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Home</a>
+                <a href="#about" class="nav-link text-gray-600 hover:text-blue-600 font-medium">About</a>
+                <a href="#skills" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Skills</a>
+                <a href="#experience" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Experience</a>
+                <a href="#projects" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Projects</a>
+                <a href="#contact" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Contact</a>
+            </div>
+            <button class="md:hidden text-gray-600" id="mobileMenuButton">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center gradient-bg pt-16 relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="particle" style="top: 10%; left: 10%; width: 30px; height: 30px; animation-duration: 20s;"></div>
+            <div class="particle" style="top: 70%; left: 80%; width: 50px; height: 50px; animation-duration: 25s;"></div>
+            <div class="particle" style="top: 40%; left: 60%; width: 40px; height: 40px; animation-duration: 30s;"></div>
+            <div class="particle" style="top: 20%; left: 40%; width: 25px; height: 25px; animation-duration: 15s;"></div>
+            <div class="particle" style="top: 80%; left: 20%; width: 35px; height: 35px; animation-duration: 22s;"></div>
+        </div>
+
+        <div class="container mx-auto px-6 py-20 flex flex-col md:flex-row items-center relative z-10">
+            <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right">
+                <div class="mb-4">
+                    <span class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium animate-pulse">UI/UX Designer & Trainer</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Hello, I'm <span class="text-yellow-300 typing-animation">Mohanasundar</span>
+                </h1>
+                <h2 class="text-2xl md:text-3xl text-white mb-6 font-light">
+                    Crafting <span class="font-bold">Digital Experiences</span> That Inspire
+                </h2>
+                <p class="text-gray-200 text-lg mb-8 max-w-xl leading-relaxed">
+                    An innovative problem-solver with expertise in app development and user-centric design, creating seamless digital experiences that users love.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#projects" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium text-center hover:bg-gray-100 transition duration-300 shadow-lg flex items-center justify-center gap-2 animate-bounce-slow">
+                        <span>View My Work</span>
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                    <a href="#contact" class="border border-white text-white px-6 py-3 rounded-lg font-medium text-center hover:bg-white/10 transition duration-300 flex items-center justify-center gap-2">
+                        <span>Hire Me</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center" data-aos="fade-left" data-aos-delay="300">
+                <div class="relative">
+                    <div class="w-80 h-80 bg-white/20 rounded-full flex items-center justify-center floating morph-shape">
+                        <div class="w-64 h-64 bg-white/30 rounded-full flex items-center justify-center morph-shape">
+                            <div class="w-48 h-48 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-2xl morph-shape">
+                                <!-- Replace with your image -->
+                                <img src="mohan.jpeg" alt="Mohanasundar" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-4 -right-4 bg-yellow-400 text-gray-800 p-4 rounded-lg shadow-lg animate-pulse-slow">
+                        <div class="text-center">
+                            <div class="text-xl font-bold">1+</div>
+                            <div class="text-sm">Years Experience</div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-4 -left-4 bg-white text-blue-600 p-4 rounded-lg shadow-lg animate-bounce-slow">
+                        <div class="text-center">
+                            <div class="text-xl font-bold">10+</div>
+                            <div class="text-sm">Projects</div>
+                        </div>
+                    </div>
+                    <div class="absolute top-10 -right-10 bg-green-400 text-white p-3 rounded-lg shadow-lg animate-wiggle">
+                        <div class="text-center">
+                            <div class="text-sm font-bold">Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-white text-2xl">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+        <div class="absolute bottom-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float" style="animation-delay: 2s"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">About <span class="text-gradient">Me</span></h2>
+            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
+                An innovative problem-solver with a solid foundation in app development, Android Studio, and UI/UX design.
+            </p>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-2/3" data-aos="fade-right">
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-md mb-8 card-hover">
+                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                            I am highly skilled in crafting <span class="font-bold text-blue-600">user-centric, high-performance applications</span>. Proficient in Flutter and Dart, I develop cross-platform solutions that balance functionality with seamless design.
+                        </p>
+                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                            My expertise includes building responsive user interfaces, integrating APIs, and optimizing application performance. I excel in adapting to evolving project requirements, collaborating with teams to address challenges, and ensuring timely delivery of solutions.
+                        </p>
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Committed to delivering high-quality applications, I focus on enhancing user experiences through intuitive designs and robust functionality. Passionate about technology, I strive to create impactful, efficient applications.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-gradient-to-br from-blue-500 to-purple-600 text-white p-4 rounded-xl text-center card-hover">
+                            <div class="text-2xl font-bold">10+</div>
+                            <div class="text-sm">Projects Done</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-500 to-blue-600 text-white p-4 rounded-xl text-center card-hover">
+                            <div class="text-2xl font-bold">1+</div>
+                            <div class="text-sm">Years Experience</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-purple-500 to-pink-600 text-white p-4 rounded-xl text-center card-hover">
+                            <div class="text-2xl font-bold">5+</div>
+                            <div class="text-sm">Happy Clients</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-yellow-500 to-orange-600 text-white p-4 rounded-xl text-center card-hover">
+                            <div class="text-2xl font-bold">1+</div>
+                            <div class="text-sm">Design Awards</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/3" data-aos="fade-left" data-aos-delay="200">
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl shadow-md border border-blue-100">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Personal Info</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-user text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 text-sm">Name</p>
+                                    <p class="font-medium">Mohanasundar</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-envelope text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 text-sm">Email</p>
+                                    <p class="font-medium">mohanasundars909@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-phone text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 text-sm">Phone</p>
+                                    <p class="font-medium">+91 6383634491</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-briefcase text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 text-sm">Experience</p>
+                                    <p class="font-medium">1+ Years</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-graduation-cap text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 text-sm">Education</p>
+                                    <p class="font-medium">B.Tech (AI & DS)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 text-sm">Availability</p>
+                                    <p class="font-medium text-green-600">Open to Opportunities</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-gray-800 mt-6 mb-4">Connect With Me</h3>
+                        <div class="flex space-x-4">
+                            <a href="https://www.linkedin.com/in/mohanasundar-s-81b960220/" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition duration-300 skill-icon">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com/moha0808" class="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300 skill-icon">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.figma.com/proto/2OGZFAWPSXehujJeDSDnM7?node-id=0-1&t=kcjZtERWwG4oBmyp-6" class="bg-purple-600 text-white p-3 rounded-full hover:bg-purple-700 transition duration-300 skill-icon">
+                                <i class="fab fa-figma"></i>
+                            </a>
+                            <a href="https://www.behance.net/20ad033mohansu" class="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition duration-300 skill-icon">
+                                <i class="fab fa-dribbble"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50 relative overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float" style="animation-delay: 3s"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">My <span class="text-gradient">Skills</span></h2>
+            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
+                A comprehensive overview of my technical skills and design expertise.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- UI/UX Design Skills -->
+                <div class="bg-white p-6 rounded-2xl shadow-md card-hover" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-palette text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">UI/UX Design</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Creating intuitive and beautiful user experiences</p>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">User Research</span>
+                            <span class="text-blue-600 font-bold">95%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full skill-bar" style="width: 95%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">Wireframing</span>
+                            <span class="text-blue-600 font-bold">90%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full skill-bar" style="width: 90%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">Prototyping</span>
+                            <span class="text-blue-600 font-bold">92%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full skill-bar" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Development Skills -->
+                <div class="bg-white p-6 rounded-2xl shadow-md card-hover" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-code text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Development</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Building robust and scalable applications</p>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">Flutter/Dart</span>
+                            <span class="text-blue-600 font-bold">88%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full skill-bar" style="width: 88%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">JavaScript</span>
+                            <span class="text-blue-600 font-bold">80%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full skill-bar" style="width: 80%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">HTML/CSS</span>
+                            <span class="text-blue-600 font-bold">85%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full skill-bar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tools & Software -->
+                <div class="bg-white p-6 rounded-2xl shadow-md card-hover" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-tools text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Tools & Software</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Mastering the tools of the trade</p>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">Figma</span>
+                            <span class="text-blue-600 font-bold">95%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full skill-bar" style="width: 95%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">Adobe XD</span>
+                            <span class="text-blue-600 font-bold">85%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full skill-bar" style="width: 85%"></div>
+                        </div>
+                         <div class="flex justify-between">
+                            <span class="text-gray-700">Visual Studio </span>
+                            <span class="text-blue-600 font-bold">85%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full skill-bar" style="width: 85%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">Android Studio</span>
+                            <span class="text-blue-600 font-bold">80%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full skill-bar" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Soft Skills -->
+                <div class="bg-white p-6 rounded-2xl shadow-md card-hover" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-users text-yellow-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Soft Skills</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Essential skills for collaboration and leadership</p>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">Communication</span>
+                            <span class="text-blue-600 font-bold">90%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-600 h-2 rounded-full skill-bar" style="width: 90%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">Problem Solving</span>
+                            <span class="text-blue-600 font-bold">92%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-600 h-2 rounded-full skill-bar" style="width: 92%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">Team Collaboration</span>
+                            <span class="text-blue-600 font-bold">88%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-600 h-2 rounded-full skill-bar" style="width: 88%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Skill Badges -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="100">
+                    <i class="fab fa-flutter text-blue-500 text-3xl mb-2"></i>
+                    <p class="font-medium">Flutter</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="150">
+                    <i class="fab fa-figma text-purple-500 text-3xl mb-2"></i>
+                    <p class="font-medium">Figma</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="200">
+                    <i class="fab fa-js-square text-yellow-500 text-3xl mb-2"></i>
+                    <p class="font-medium">JavaScript</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="250">
+                    <i class="fab fa-java text-red-500 text-3xl mb-2"></i>
+                    <p class="font-medium">Java</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="300">
+                    <i class="fab fa-python text-blue-400 text-3xl mb-2"></i>
+                    <p class="font-medium">Python</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="350">
+                    <i class="fas fa-database text-green-500 text-3xl mb-2"></i>
+                    <p class="font-medium">SQL</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="350">
+                    <i class="fas fa-database text-green-500 text-3xl mb-2"></i>
+                    <p class="font-medium">PowerBI</p>
+                </div>
+<div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="350">
+  <i class="fas fa-code text-purple-600 text-3xl mb-2"></i>
+  <p class="font-medium">Visual Studio</p>
+</div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-white relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">Experience & <span class="text-gradient">Education</span></h2>
+            
+            <div class="flex flex-col lg:flex-row gap-12 mt-12">
+                <!-- Experience -->
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-briefcase text-blue-500 mr-3"></i> Experience
+                    </h3>
+                    
+                    <div class="space-y-8 relative">
+                        <!-- Timeline line -->
+                        <div class="absolute left-8 top-0 bottom-0 w-1 bg-blue-200 rounded-full"></div>
+                        
+                        <!-- Experience 1 -->
+                        <div class="relative flex items-start" data-aos="fade-right" data-aos-delay="100">
+                            <div class="bg-blue-500 rounded-full p-2 z-10">
+                                <div class="bg-white rounded-full p-1">
+                                    <i class="fas fa-rocket text-blue-500 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-blue-500 card-hover w-full">
+                                <h4 class="text-xl font-bold text-gray-800">UI/UX Designer and Trainer</h4>
+                                <p class="text-blue-600 font-medium">VEI TECHNOLOGIES</p>
+                                <p class="text-gray-500 text-sm mb-3">Jan 2025 - Present</p>
+                                <p class="text-gray-700">Passionate UI/UX Designer and Trainer with expertise in crafting intuitive digital experiences and mentoring aspiring designers. Collaborated with cross-functional teams to conduct user research, implement feedback, and enhance usability.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Experience 2 -->
+                        <div class="relative flex items-start" data-aos="fade-right" data-aos-delay="200">
+                            <div class="bg-purple-500 rounded-full p-2 z-10">
+                                <div class="bg-white rounded-full p-1">
+                                    <i class="fas fa-palette text-purple-500 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-purple-500 card-hover w-full">
+                                <h4 class="text-xl font-bold text-gray-800">Design Intern</h4>
+                                <p class="text-purple-600 font-medium">Airtory Interactive</p>
+                                <p class="text-gray-500 text-sm mb-3">Sep 2024 - Dec 2024</p>
+                                <p class="text-gray-700">Designed and delivered intuitive, user-friendly interfaces for web and mobile applications by creating wireframes, prototypes, and high-fidelity designs using tools like Figma and Adobe XD.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Experience 3 -->
+                        <div class="relative flex items-start" data-aos="fade-right" data-aos-delay="300">
+                            <div class="bg-green-500 rounded-full p-2 z-10">
+                                <div class="bg-white rounded-full p-1">
+                                    <i class="fas fa-code text-green-500 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-green-500 card-hover w-full">
+                                <h4 class="text-xl font-bold text-gray-800">Flutter Developer</h4>
+                                <p class="text-green-600 font-medium">Teckzy Research Analytics IT Solutions</p>
+                                <p class="text-gray-500 text-sm mb-3">Apr 2024 - Jun 2024</p>
+                                <p class="text-gray-700">Developed dynamic mobile applications using Flutter, integrating REST APIs and Firebase for seamless data synchronization, user authentication, and real-time database functionality.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Education -->
+                <div class="lg:w-1/2" data-aos="fade-left" data-aos-delay="200">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-graduation-cap text-indigo-500 mr-3"></i> Education
+                    </h3>
+                    
+                    <div class="space-y-8 relative">
+                        <!-- Timeline line -->
+                        <div class="absolute left-8 top-0 bottom-0 w-1 bg-indigo-200 rounded-full"></div>
+                        
+                        <!-- Education 1 -->
+                        <div class="relative flex items-start" data-aos="fade-left" data-aos-delay="100">
+                            <div class="bg-indigo-500 rounded-full p-2 z-10">
+                                <div class="bg-white rounded-full p-1">
+                                    <i class="fas fa-university text-indigo-500 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-indigo-500 card-hover w-full">
+                                <h4 class="text-xl font-bold text-gray-800">Bachelor of Technologies (AI&DS)</h4>
+                                <p class="text-indigo-600 font-medium">Muthayammal Engineering College</p>
+                                <p class="text-gray-500 text-sm mb-3">2020 - 2024</p>
+                                <p class="text-gray-700">Specialized in Artificial Intelligence and Data Science, gaining comprehensive knowledge in machine learning, data analysis, and software development.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Education 2 -->
+                        <div class="relative flex items-start" data-aos="fade-left" data-aos-delay="200">
+                            <div class="bg-pink-500 rounded-full p-2 z-10">
+                                <div class="bg-white rounded-full p-1">
+                                    <i class="fas fa-school text-pink-500 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-pink-500 card-hover w-full">
+                                <h4 class="text-xl font-bold text-gray-800">Higher Secondary Education</h4>
+                                <p class="text-pink-600 font-medium">Sarswathi Matric Higher Secondary School</p>
+                                <p class="text-gray-500 text-sm mb-3">2018 - 2020</p>
+                                <p class="text-gray-700">Completed higher secondary education with focus on computer science and mathematics.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Education 3 -->
+                        <div class="relative flex items-start" data-aos="fade-left" data-aos-delay="300">
+                            <div class="bg-teal-500 rounded-full p-2 z-10">
+                                <div class="bg-white rounded-full p-1">
+                                    <i class="fas fa-book text-teal-500 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-teal-500 card-hover w-full">
+                                <h4 class="text-xl font-bold text-gray-800">Matric Secondary Education</h4>
+                                <p class="text-teal-600 font-medium">Government Higher Secondary School</p>
+                                <p class="text-gray-500 text-sm mb-3">2014 - 2018</p>
+                                <p class="text-gray-700">Completed secondary education with distinction in science subjects.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-50 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float" style="animation-delay: 2s"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">My <span class="text-gradient">Projects</span></h2>
+            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
+                A showcase of my recent projects and creative work in UI/UX design and development.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="100">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
+                            <div class="h-48 bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center relative">
+                                <i class="fas fa-shopping-cart text-white text-6xl"></i>
+                                <div class="absolute top-4 right-4 bg-white text-blue-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">E-commerce App</h3>
+                                <p class="text-gray-600 mb-4">Built a fully functional e-commerce application with product search, cart management, and smooth UI.</p>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
+                                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Flutter</span>
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">UI Design</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-4">E-commerce App</h3>
+                            <p class="text-white text-center mb-6">A complete shopping experience with intuitive navigation and seamless checkout process.</p>
+                            <a href="https://github.com/moha0808/e_commerceapp" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="200">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
+                            <div class="h-48 bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center relative">
+                                <i class="fas fa-print text-white text-6xl"></i>
+                                <div class="absolute top-4 right-4 bg-white text-green-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Clone Port E Stationary</h3>
+                                <p class="text-gray-600 mb-4">Developed an app for printing and document services with nearby stationary shops.</p>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Flutter</span>
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">UX Research</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-4">Port E Stationary</h3>
+                            <p class="text-white text-center mb-6">Connecting users with local stationary services for all their printing needs.</p>
+                            <a href="https://github.com/moha0808/e_cloneport" class="bg-white text-green-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="300">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
+                            <div class="h-48 bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center relative">
+                                <i class="fas fa-clock text-white text-6xl"></i>
+                                <div class="absolute top-4 right-4 bg-white text-yellow-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Reminder App</h3>
+                                <p class="text-gray-600 mb-4">A customizable reminder app with animations and clock widgets.</p>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
+                                    <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Flutter</span>
+                                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Animations</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-4">Reminder App</h3>
+                            <p class="text-white text-center mb-6">Never miss important tasks with this beautifully designed reminder application.</p>
+                            <a href="https://github.com/moha0808/DailyRemainder" class="bg-white text-orange-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="400">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
+                            <div class="h-48 bg-gradient-to-r from-red-400 to-pink-500 flex items-center justify-center relative">
+                                <i class="fas fa-heartbeat text-white text-6xl"></i>
+                                <div class="absolute top-4 right-4 bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Tea Brands Website</h3>
+                                <p class="text-gray-600 mb-4">Tea brands' websites offer a variety of features, highlighting rich traditions, premium blends, and innovations in healthy alternatives. Leading sites such as Teabox, Organic India, and Society Tea focus on quality sourcing and engaging digital experiences for tea lovers.</p>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
+                                    <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">UI Design</span>
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">User Research</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-4">Tea Brands Website</h3>
+                            <p class="text-white text-center mb-6">Tea brands' websites offer a variety of features, highlighting rich traditions, premium blends, and innovations in healthy alternatives. Leading sites such as Teabox, Organic India, and Society Tea focus on quality sourcing and engaging digital experiences for tea lovers.</p>
+                            <a href="https://www.figma.com/design/4vfnOfbsOHZbWPuJWwtMPt/Tea-Brands?t=8GVXhsEmeCs8VGNo-0" class="bg-white text-pink-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="500">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
+                            <div class="h-48 bg-gradient-to-r from-teal-400 to-cyan-500 flex items-center justify-center relative">
+                                <i class="fas fa-wallet text-white text-6xl"></i>
+                                <div class="absolute top-4 right-4 bg-white text-teal-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Clone Port E-Staionary</h3>
+                                <p class="text-gray-600 mb-4">Clone Port E-Stationary is an app designed to connect users with nearby printing and document services through a network of stationary shops. It allows users to easily locate and access various printing, scanning, and stationery services, streamlining the process of finding such options in their vicinity. The app focuses on convenience and accessibility for both everyday users and businesses needing quick, reliable document solutions.</p>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
+                                    <span class="bg-teal-100 text-teal-800 text-xs px-2 py-1 rounded">UI Design</span>
+                                    <span class="bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded">Prototyping</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-4">Clone Port E-Staionary</h3>
+                            <p class="text-white text-center mb-6">Clone Port E-Stationary is an app designed to connect users with nearby printing and document services through a network of stationary shops. It allows users to easily locate and access various printing, scanning, and stationery services, streamlining the process of finding such options in their vicinity. The app focuses on convenience and accessibility for both everyday users and businesses needing quick, reliable document solutions.</p>
+                            <a href="https://www.figma.com/design/ctqWs0MwUb1P2TLHLQtCvn/Redesign-clone-port?node-id=2-63&t=pg4RLiL1anJG4NY6-0" class="bg-white text-cyan-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="600">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
+                            <div class="h-48 bg-gradient-to-r from-indigo-400 to-purple-500 flex items-center justify-center relative">
+                                <i class="fas fa-music text-white text-6xl"></i>
+                                <div class="absolute top-4 right-4 bg-white text-indigo-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Personal Website With Responsible </h3>
+                                <p class="text-gray-600 mb-4">A personal website with a responsible design is modern, visually bold, and fully responsive—adapting seamlessly to any device. It features clean layouts, accessible color schemes, smooth animations, and custom visuals to reflect individuality while remaining easy and inclusive for all users</p>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
+                                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">UI Design</span>
+                                    <span class="bg-purple-100 text-purple-800 text-xs px-2py-1 rounded">Prototyping</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-4">Personal Website With Responsible</h3>
+                            <p class="text-white text-center mb-6">A personal website with a responsible design is modern, visually bold, and fully responsive—adapting seamlessly to any device. It features clean layouts, accessible color schemes, smooth animations, and custom visuals to reflect individuality while remaining easy and inclusive for all users</p>
+                            <a href="https://www.figma.com/site/etWKMhjtfHhDr8J4zaNbYN/Mohan-Profile?node-id=0-1&p=f&t=x1lJl6DkowSk8oCB-0" class="bg-white text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12" data-aos="fade-up">
+                <a href="#contact" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition duration-300 inline-flex items-center">
+                    <span>Start a Project With Me</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white relative overflow-hidden">
+        <div class="absolute -top-40 -left-40 w-80 h-80 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+        <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float" style="animation-delay: 3s"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">Contact <span class="text-gradient">Me</span></h2>
+            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
+                I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.
+            </p>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Contact Info -->
+                <div class="lg:w-1/3" data-aos="fade-right">
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl shadow-md border border-blue-100">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Get in Touch</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-phone text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Phone</h4>
+                                    <p class="text-gray-600">+91 6383634491</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-envelope text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Email</h4>
+                                    <p class="text-gray-600">mohanasundars909@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fab fa-linkedin text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">LinkedIn</h4>
+                                    <p class="text-gray-600">linkedin.com/in/mohanasundar-s-81b960220</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fab fa-github text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">GitHub</h4>
+                                    <p class="text-gray-600">github.com/moha0808</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fab fa-figma text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Figma</h4>
+                                    <p class="text-gray-600">figma.com/@mohanasundar</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-bold text-gray-800 mb-4">Let's Connect</h4>
+                            <div class="flex space-x-4">
+                                <a href="https://www.linkedin.com/in/mohanasundar-s-81b960220/" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition duration-300 skill-icon">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="https://github.com/moha0808" class="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300 skill-icon">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://www.figma.com/proto/2OGZFAWPSXehujJeDSDnM7?node-id=0-1&t=kcjZtERWwG4oBmyp-6" class="bg-purple-600 text-white p-3 rounded-full hover:bg-purple-700 transition duration-300 skill-icon">
+                                    <i class="fab fa-figma"></i>
+                                </a>
+                                <a href="https://www.behance.net/20ad033mohansu" class="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition duration-300 skill-icon">
+                                    <i class="fab fa-dribbble"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="lg:w-2/3" data-aos="fade-left" data-aos-delay="200">
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl shadow-md border border-blue-100">
+                        <form id="contactForm" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="name" class="block text-gray-700 font-medium mb-2">Name *</label>
+                                    <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-gray-700 font-medium mb-2">Email *</label>
+                                    <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300" required>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300">
+                            </div>
+                            
+                            <div>
+                                <label for="subject" class="block text-gray-700 font-medium mb-2">Subject *</label>
+                                <input type="text" id="subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300" required>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-gray-700 font-medium mb-2">Message *</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300" required></textarea>
+                            </div>
+                            
+                            <button type="submit" id="submitBtn" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition duration-300 w-full md:w-auto flex items-center justify-center gap-2">
+                                <span id="submitText">Send Message</span>
+                                <div id="submitSpinner" class="loading-spinner hidden"></div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold flex items-center">
+                        <span class="text-gradient mr-2">M</span>ohanasundar
+                    </h3>
+                    <p class="text-gray-400 mt-2">UI/UX Designer and Trainer</p>
+                </div>
+                
+                <div class="flex space-x-4 mb-6 md:mb-0">
+                    <a href="https://linkedin.com/in/mohanasundar" class="bg-gray-700 text-white p-3 rounded-full hover:bg-blue-600 transition duration-300 skill-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/mohanasundar" class="bg-gray-700 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300 skill-icon">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://figma.com/mohanasundar" class="bg-gray-700 text-white p-3 rounded-full hover:bg-purple-600 transition duration-300 skill-icon">
+                        <i class="fab fa-figma"></i>
+                    </a>
+                    <a href="https://www.behance.net/20ad033mohansu" class="bg-gray-700 text-white p-3 rounded-full hover:bg-pink-600 transition duration-300 skill-icon">
+                        <i class="fab fa-dribbble"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Mohanasundar S. All rights reserved.</p>
+                <p class="mt-2">Designed with <i class="fas fa-heart text-red-500"></i> and <i class="fas fa-coffee text-yellow-500"></i></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Popup Overlay -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <button class="popup-close" id="popupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="1.jpg" alt="Project Image" class="popup-image">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4" id="popupTitle">Project Title</h3>
+            <p class="text-gray-600 mb-6" id="popupDescription">Project description goes here.</p>
+            <div class="flex flex-wrap gap-2 mb-6" id="popupTags"></div>
+            <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition duration-300" id="popupLink">
+                View Project
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize AOS (Animate On Scroll)
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 1000,
+                once: true,
+                offset: 100,
+                disable: 'mobile'
+            });
+            
+            // Initialize EmailJS
+            (function(){
+                emailjs.init("YOUR_PUBLIC_KEY"); // You need to get this from EmailJS
+            })();
+            
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate skill bars on scroll
+            gsap.utils.toArray('.skill-bar').forEach(bar => {
+                gsap.fromTo(bar, 
+                    { width: "0%" },
+                    {
+                        width: bar.style.width,
+                        duration: 2,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: bar,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+            
+            // Parallax effect for background elements
+            gsap.utils.toArray('.particle').forEach(particle => {
+                gsap.to(particle, {
+                    y: -100,
+                    scrollTrigger: {
+                        trigger: particle,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                });
+            });
+            
+            // Mobile menu toggle
+            const menuButton = document.getElementById('mobileMenuButton');
+            const navMenu = document.querySelector('.hidden.md\\:flex');
+            
+            menuButton.addEventListener('click', function() {
+                navMenu.classList.toggle('hidden');
+                navMenu.classList.toggle('flex');
+                navMenu.classList.toggle('flex-col');
+                navMenu.classList.toggle('absolute');
+                navMenu.classList.toggle('bg-white');
+                navMenu.classList.toggle('w-full');
+                navMenu.classList.toggle('left-0');
+                navMenu.classList.toggle('top-16');
+                navMenu.classList.toggle('p-4');
+                navMenu.classList.toggle('shadow-lg');
+                navMenu.classList.toggle('space-y-4');
+            });
+            
+            // Contact Form Submission
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitSpinner = document.getElementById('submitSpinner');
+            const toast = document.getElementById('toast');
+            
+            function showToast(message, isError = false) {
+                toast.textContent = message;
+                toast.className = isError ? 'toast error show' : 'toast show';
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Show loading state
+                    submitText.textContent = 'Sending...';
+                    submitSpinner.classList.remove('hidden');
+                    submitBtn.disabled = true;
+                    
+                    // Get form data
+                    const formData = new FormData(contactForm);
+                    const data = {
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
+                        subject: formData.get('subject'),
+                        message: formData.get('message'),
+                        to_phone: '+916383634491' // Your phone number
+                    };
+                    
+                    // Send SMS using Twilio (You'll need to set up a backend for this)
+                    // For now, we'll simulate sending and show success message
+                    
+                    // Simulate API call
+                    setTimeout(() => {
+                        // Reset form
+                        contactForm.reset();
+                        
+                        // Show success message
+                        showToast('Message sent successfully! I will get back to you soon.');
+                        
+                        // Reset button state
+                        submitText.textContent = 'Send Message';
+                        submitSpinner.classList.add('hidden');
+                        submitBtn.disabled = false;
+                        
+                        // Here you would typically send the data to your backend
+                        // which would then send an SMS to your phone
+                        console.log('Message details:', data);
+                        
+                        // Example of how to send to backend:
+                        // fetch('/send-message', {
+                        //     method: 'POST',
+                        //     headers: {
+                        //         'Content-Type': 'application/json',
+                        //     },
+                        //     body: JSON.stringify(data)
+                        // })
+                        // .then(response => response.json())
+                        // .then(data => {
+                        //     showToast('Message sent successfully!');
+                        //     contactForm.reset();
+                        // })
+                        // .catch(error => {
+                        //     showToast('Failed to send message. Please try again.', true);
+                        // });
+                        
+                    }, 2000);
+                });
+            }
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (!navMenu.classList.contains('hidden')) {
+                            menuButton.click();
+                        }
+                    }
+                });
+            });
+            
+            // Scroll progress bar
+            window.addEventListener('scroll', function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("progressBar").style.width = scrolled + "%";
+                
+                // Update scroll indicator
+                const sections = document.querySelectorAll('section');
+                const scrollDots = document.querySelectorAll('.scroll-dot');
+                
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                scrollDots.forEach(dot => {
+                    dot.classList.remove('active');
+                    if (dot.getAttribute('data-section') === currentSection) {
+                        dot.classList.add('active');
+                    }
+                });
+            });
+            
+            // Scroll indicator click
+            document.querySelectorAll('.scroll-dot').forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-section');
+                    const targetElement = document.getElementById(sectionId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Cursor follower
+            const cursorFollower = document.getElementById('cursorFollower');
+            document.addEventListener('mousemove', function(e) {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            });
+            
+            // Add hover effect to cursor follower
+            document.querySelectorAll('a, button, .card-hover').forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    cursorFollower.style.transform = 'scale(2)';
+                    cursorFollower.style.background = 'rgba(59, 130, 246, 0.3)';
+                });
+                element.addEventListener('mouseleave', function() {
+                    cursorFollower.style.transform = 'scale(1)';
+                    cursorFollower.style.background = 'rgba(59, 130, 246, 0.5)';
+                });
+            });
+            
+            // Add floating particles
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 30 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.opacity = Math.random() * 0.5 + 0.2;
+                document.getElementById('home').appendChild(particle);
+                
+                // Remove particle after animation completes
+                setTimeout(() => {
+                    particle.remove();
+                }, 30000);
+            }
+            
+            // Create initial particles
+            for (let i = 0; i < 10; i++) {
+                createParticle();
+            }
+            
+            // Continue creating particles
+            setInterval(createParticle, 2000);
+            
+            // Popup functionality
+            const popupOverlay = document.getElementById('popupOverlay');
+            const popupClose = document.getElementById('popupClose');
+            const popupTitle = document.getElementById('popupTitle');
+            const popupDescription = document.getElementById('popupDescription');
+            const popupTags = document.getElementById('popupTags');
+            const popupLink = document.getElementById('popupLink');
+            
+            // Close popup when clicking close button
+            popupClose.addEventListener('click', function() {
+                popupOverlay.classList.remove('active');
+            });
+            
+            // Close popup when clicking outside the content
+            popupOverlay.addEventListener('click', function(e) {
+                if (e.target === popupOverlay) {
+                    popupOverlay.classList.remove('active');
+                }
+            });
+            
+            // Close popup with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
+                    popupOverlay.classList.remove('active');
+                }
+            });
+            
+            // Add click events to project cards to open popup
+            document.querySelectorAll('.flip-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const front = this.querySelector('.flip-card-front');
+                    const title = front.querySelector('h3').textContent;
+                    const description = front.querySelector('p').textContent;
+                    const tags = front.querySelectorAll('.bg-blue-100, .bg-purple-100, .bg-green-100, .bg-yellow-100, .bg-orange-100, .bg-pink-100, .bg-teal-100, .bg-cyan-100, .bg-indigo-100');
+                    const link = this.querySelector('.flip-card-back a').href;
+                    
+                    // Set popup content
+                    popupTitle.textContent = title;
+                    popupDescription.textContent = description;
+                    popupLink.href = link;
+                    
+                    // Clear previous tags
+                    popupTags.innerHTML = '';
+                    
+                    // Add tags to popup
+                    tags.forEach(tag => {
+                        const tagElement = document.createElement('span');
+                        tagElement.textContent = tag.textContent;
+                        tagElement.className = tag.className + ' text-xs px-2 py-1 rounded';
+                        popupTags.appendChild(tagElement);
+                    });
+                    
+                    // Show popup
+                    popupOverlay.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
