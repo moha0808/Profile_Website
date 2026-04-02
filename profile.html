@@ -1,1598 +1,1185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohanasundar - UI/UX Designer & Trainer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#1E40AF',
-                        accent: '#8B5CF6',
-                        dark: '#1F2937',
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'bounce-slow': 'bounce 3s infinite',
-                        'gradient': 'gradient 8s ease infinite',
-                        'typing': 'typing 3.5s steps(40, end), blink-caret .75s step-end infinite',
-                        'wiggle': 'wiggle 1s ease-in-out infinite',
-                        'fade-in-up': 'fadeInUp 0.8s ease-out',
-                        'slide-in-left': 'slideInLeft 0.8s ease-out',
-                        'slide-in-right': 'slideInRight 0.8s ease-out',
-                        'zoom-in': 'zoomIn 0.8s ease-out',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        gradient: {
-                            '0%, 100%': { 'background-position': '0% 50%' },
-                            '50%': { 'background-position': '100% 50%' },
-                        },
-                        typing: {
-                            'from': { width: '0' },
-                            'to': { width: '100%' }
-                        },
-                        'blink-caret': {
-                            'from, to': { 'border-color': 'transparent' },
-                            '50%': { 'border-color': 'white' }
-                        },
-                        wiggle: {
-                            '0%, 100%': { transform: 'rotate(-3deg)' },
-                            '50%': { transform: 'rotate(3deg)' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        },
-                        slideInLeft: {
-                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
-                            '100%': { opacity: '1', transform: 'translateX(0)' }
-                        },
-                        slideInRight: {
-                            '0%': { opacity: '0', transform: 'translateX(30px)' },
-                            '100%': { opacity: '1', transform: 'translateX(0)' }
-                        },
-                        zoomIn: {
-                            '0%': { opacity: '0', transform: 'scale(0.5)' },
-                            '100%': { opacity: '1', transform: 'scale(1)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-        .gradient-bg {
-            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-        }
-        .text-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .card-hover:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        .skill-bar {
-            transition: width 2s ease-in-out;
-        }
-        .nav-link {
-            position: relative;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: -5px;
-            left: 0;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transition: width 0.4s ease;
-            border-radius: 10px;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-        .typing-animation {
-            overflow: hidden;
-            border-right: .15em solid white;
-            white-space: nowrap;
-            margin: 0 auto;
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
-        }
-        .parallax {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .skill-icon {
-            transition: all 0.3s ease;
-        }
-        .skill-icon:hover {
-            transform: scale(1.2) rotate(10deg);
-        }
-        .pulse-dot {
-            animation: pulse 2s infinite;
-        }
-        .scroll-indicator {
-            position: fixed;
-            top: 50%;
-            right: 30px;
-            transform: translateY(-50%);
-            z-index: 100;
-        }
-        .scroll-dot {
-            width: 12px;
-            height: 12px;
-            background-color: #3B82F6;
-            border-radius: 50%;
-            margin: 15px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .scroll-dot.active {
-            background-color: #1E40AF;
-            transform: scale(1.5);
-        }
-        .flip-card {
-            perspective: 1000px;
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
-        }
-        .flip-card:hover .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .flip-card-back {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transform: rotateY(180deg);
-        }
-        .morph-shape {
-            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            animation: morph 8s ease-in-out infinite;
-        }
-        @keyframes morph {
-            0% {
-                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            }
-            50% {
-                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-            }
-            100% {
-                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            }
-        }
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            animation: float 15s infinite linear;
-        }
-        .cursor-follower {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background: rgba(59, 130, 246, 0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s;
-        }
-        .progress-bar {
-            height: 6px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            width: 0%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            transition: width 0.3s ease;
-        }
-        
-        /* Popup Styles */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        .popup-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .popup-content {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            transform: scale(0.7);
-            transition: transform 0.3s ease;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        .popup-overlay.active .popup-content {
-            transform: scale(1);
-        }
-        .popup-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #6B7280;
-            transition: color 0.3s ease;
-        }
-        .popup-close:hover {
-            color: #EF4444;
-        }
-        .popup-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #10B981;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            z-index: 10000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .toast.error {
-            background: #EF4444;
-        }
-        
-        /* Loading Spinner */
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohanasundar — UI/UX Designer & Technical Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #0f0f1a;
+  --bg3: #14142b;
+  --card: rgba(255,255,255,0.03);
+  --card-border: rgba(255,255,255,0.08);
+  --accent: #6c63ff;
+  --accent2: #ff6b9d;
+  --accent3: #00d4ff;
+  --accent4: #ffd166;
+  --text: #f0f0ff;
+  --text-muted: #8888aa;
+  --gradient: linear-gradient(135deg, #6c63ff, #ff6b9d);
+  --gradient2: linear-gradient(135deg, #00d4ff, #6c63ff);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+#cursor { position:fixed; width:10px; height:10px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:99999; transform:translate(-50%,-50%); transition:background .2s; mix-blend-mode:exclusion; }
+#cursor-trail { position:fixed; width:36px; height:36px; border:1.5px solid var(--accent); border-radius:50%; pointer-events:none; z-index:99998; transform:translate(-50%,-50%); transition:left .12s ease, top .12s ease, width .2s, height .2s; }
+body:has(a:hover) #cursor-trail, body:has(button:hover) #cursor-trail { width:54px; height:54px; border-color:var(--accent2); }
+
+/* PROGRESS */
+#progress { position:fixed; top:0; left:0; height:3px; background:var(--gradient); z-index:1000; width:0%; transition:width .1s; }
+
+/* NAV */
+nav {
+  position: fixed; top:0; width:100%; z-index:900;
+  padding: 18px 5%;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--card-border);
+  transition: padding .3s;
+}
+.nav-logo { font-family:'Syne',sans-serif; font-size:1.4rem; font-weight:800; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav-links { display:flex; gap:32px; list-style:none; }
+.nav-links a { color:var(--text-muted); text-decoration:none; font-size:.9rem; font-weight:500; letter-spacing:.5px; transition:color .3s; position:relative; }
+.nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--gradient); transition:width .3s; border-radius:2px; }
+.nav-links a:hover { color:var(--text); }
+.nav-links a:hover::after { width:100%; }
+.nav-btn { background:var(--gradient); border:none; color:#fff; padding:9px 22px; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:.88rem; font-weight:500; cursor:none; transition:transform .2s, box-shadow .2s; }
+.nav-btn:hover { transform:scale(1.05); box-shadow:0 0 20px rgba(108,99,255,.5); }
+.hamburger { display:none; flex-direction:column; gap:5px; cursor:none; background:none; border:none; }
+.hamburger span { width:24px; height:2px; background:var(--text); border-radius:2px; transition:.3s; }
+
+/* HERO */
+#home {
+  min-height:100vh; display:flex; align-items:center;
+  padding: 100px 5% 60px;
+  position: relative; overflow:hidden;
+}
+.hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; width:100%; max-width:1200px; margin:0 auto; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(108,99,255,.12); border:1px solid rgba(108,99,255,.3); color:var(--accent); padding:7px 16px; border-radius:50px; font-size:.8rem; font-weight:500; letter-spacing:.5px; margin-bottom:20px; }
+.hero-badge .dot { width:8px; height:8px; background:var(--accent3); border-radius:50%; animation:pulse-dot 1.5s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.5;transform:scale(1.4);} }
+.hero-title { font-family:'Syne',sans-serif; font-size:clamp(2.6rem,5vw,4.2rem); font-weight:800; line-height:1.1; margin-bottom:10px; }
+.hero-title .name { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero-roles { font-size:1.1rem; color:var(--text-muted); margin-bottom:20px; font-weight:300; }
+.hero-roles span { color:var(--accent3); font-weight:500; }
+.hero-desc { color:var(--text-muted); line-height:1.75; max-width:520px; margin-bottom:36px; font-size:.97rem; }
+.hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+.btn-primary { background:var(--gradient); color:#fff; padding:13px 28px; border-radius:50px; text-decoration:none; font-weight:500; font-size:.92rem; transition:transform .2s, box-shadow .2s; display:inline-flex; align-items:center; gap:8px; }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(108,99,255,.4); }
+.btn-secondary { border:1px solid var(--card-border); color:var(--text); padding:13px 28px; border-radius:50px; text-decoration:none; font-weight:500; font-size:.92rem; transition:.2s; display:inline-flex; align-items:center; gap:8px; }
+.btn-secondary:hover { border-color:var(--accent); color:var(--accent); background:rgba(108,99,255,.06); }
+.hero-stats { display:flex; gap:32px; margin-top:44px; padding-top:44px; border-top:1px solid var(--card-border); }
+.stat-item { text-align:left; }
+.stat-num { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.stat-label { font-size:.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
+
+.hero-visual { display:flex; justify-content:center; align-items:center; position:relative; }
+.hero-avatar-ring { position:relative; width:340px; height:340px; }
+.ring { position:absolute; border-radius:50%; border:1px dashed; animation:spin-slow 20s linear infinite; }
+.ring:nth-child(1) { inset:-30px; border-color:rgba(108,99,255,.2); animation-duration:25s; }
+.ring:nth-child(2) { inset:-60px; border-color:rgba(255,107,157,.15); animation-duration:35s; animation-direction:reverse; }
+.ring:nth-child(3) { inset:-90px; border-color:rgba(0,212,255,.1); animation-duration:50s; }
+@keyframes spin-slow { to{transform:rotate(360deg);} }
+.avatar-blob {
+  width:340px; height:340px; border-radius:60% 40% 55% 45% / 50% 60% 40% 50%;
+  background: linear-gradient(135deg, rgba(108,99,255,.25), rgba(255,107,157,.2));
+  animation:morph-blob 8s ease-in-out infinite;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+  border:1px solid rgba(108,99,255,.3);
+  position:relative; z-index:2;
+}
+@keyframes morph-blob {
+  0%,100%{border-radius:60% 40% 55% 45%/50% 60% 40% 50%;}
+  33%{border-radius:45% 55% 40% 60%/60% 40% 55% 45%;}
+  66%{border-radius:55% 45% 60% 40%/40% 55% 45% 60%;}
+}
+.avatar-blob img { width:100%; height:100%; object-fit:cover; filter:saturate(1.1); }
+.hero-float-card { position:absolute; background:rgba(15,15,26,.9); border:1px solid var(--card-border); border-radius:16px; padding:14px 18px; backdrop-filter:blur(20px); animation:float-card 4s ease-in-out infinite; }
+.hero-float-card:nth-of-type(1) { top:20px; right:-20px; animation-delay:0s; }
+.hero-float-card:nth-of-type(2) { bottom:40px; left:-30px; animation-delay:1.5s; }
+.hero-float-card:nth-of-type(3) { top:50%; right:-50px; animation-delay:3s; transform:translateY(-50%); }
+@keyframes float-card { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+.hero-float-card:nth-of-type(3) { animation: float-card2 4s ease-in-out 3s infinite; }
+@keyframes float-card2 { 0%,100%{transform:translateY(-50%);} 50%{transform:translateY(calc(-50% - 12px));} }
+.fc-label { font-size:.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
+.fc-value { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.fc-icon { font-size:1.3rem; margin-bottom:4px; }
+.available-badge { position:absolute; bottom:10px; right:-10px; background:rgba(0,212,100,.15); border:1px solid rgba(0,212,100,.3); color:#00d464; padding:6px 14px; border-radius:50px; font-size:.78rem; font-weight:500; z-index:5; display:flex; align-items:center; gap:6px; }
+.available-badge::before { content:''; width:7px; height:7px; background:#00d464; border-radius:50%; animation:pulse-dot 1.5s infinite; }
+
+/* SECTION BASE */
+section { padding: 100px 5%; }
+.section-label { display:inline-flex; align-items:center; gap:8px; color:var(--accent); font-size:.78rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; }
+.section-label::before { content:''; width:20px; height:2px; background:var(--accent); }
+.section-title { font-family:'Syne',sans-serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:800; line-height:1.15; margin-bottom:14px; }
+.section-title span { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.section-desc { color:var(--text-muted); max-width:580px; line-height:1.75; font-size:.97rem; }
+.section-header { text-align:center; margin-bottom:64px; }
+.section-header .section-label, .section-header .section-desc { margin-left:auto; margin-right:auto; display:block; }
+
+/* BG EFFECTS */
+.bg-glow { position:absolute; border-radius:50%; filter:blur(120px); pointer-events:none; z-index:0; }
+.glow-purple { background:rgba(108,99,255,.12); }
+.glow-pink { background:rgba(255,107,157,.1); }
+.glow-cyan { background:rgba(0,212,255,.08); }
+
+/* ABOUT */
+#about { background:var(--bg2); position:relative; overflow:hidden; }
+.about-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:70px; align-items:start; max-width:1200px; margin:0 auto; }
+.about-image-wrap { position:relative; }
+.about-img-box { border-radius:20px; overflow:hidden; position:relative; border:1px solid var(--card-border); }
+.about-img-box img { width:100%; display:block; }
+.about-img-box .img-placeholder { height:420px; background:linear-gradient(135deg,rgba(108,99,255,.2),rgba(255,107,157,.15)); display:flex; align-items:center; justify-content:center; font-size:6rem; color:var(--accent); }
+.about-skills-snap { display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+.skill-tag { background:var(--card); border:1px solid var(--card-border); color:var(--text-muted); padding:6px 14px; border-radius:50px; font-size:.8rem; transition:.2s; }
+.skill-tag:hover { border-color:var(--accent); color:var(--accent); background:rgba(108,99,255,.06); }
+.about-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px; }
+.info-item { background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:16px; }
+.info-item .info-icon { font-size:1.2rem; margin-bottom:6px; }
+.info-item .info-label { font-size:.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; }
+.info-item .info-val { font-size:.95rem; font-weight:500; margin-top:2px; }
+.socials-row { display:flex; gap:10px; margin-top:28px; }
+.social-btn { width:42px; height:42px; border-radius:12px; border:1px solid var(--card-border); background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--text-muted); text-decoration:none; transition:.2s; font-size:.95rem; }
+.social-btn:hover { border-color:var(--accent); color:var(--accent); background:rgba(108,99,255,.1); transform:translateY(-2px); }
+
+/* ── SKILLS SECTION ── */
+#skills { background:var(--bg2); position:relative; overflow:hidden; }
+
+.skills-tabs { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:52px; }
+.stab { background:var(--card); border:1px solid var(--card-border); color:var(--text-muted); padding:10px 22px; border-radius:50px; font-size:.85rem; font-weight:500; cursor:pointer; transition:.25s; }
+.stab.active, .stab:hover { background:var(--gradient); color:#fff; border-color:transparent; }
+
+.skills-panel { display:none; max-width:1100px; margin:0 auto; }
+.skills-panel.active { display:block; }
+
+.sp-header { text-align:center; margin-bottom:36px; }
+.sp-subtitle { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; color:var(--text); margin-bottom:6px; }
+.sp-caption { font-size:.85rem; color:var(--text-muted); }
+
+.skill-bars { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; }
+.skill-bar-item { background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:20px 22px; }
+.sbi-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.sbi-name { font-size:.9rem; font-weight:600; }
+.sbi-pct { font-size:.8rem; font-weight:700; color:var(--accent); font-family:'Syne',sans-serif; }
+.sbi-track { height:6px; background:rgba(255,255,255,.07); border-radius:6px; overflow:hidden; }
+.sbi-fill { height:100%; border-radius:6px; background:var(--gradient); transform:scaleX(0); transform-origin:left; transition:transform 1.2s cubic-bezier(.23,1,.32,1); }
+.sbi-fill.animate { transform:scaleX(1); }
+
+/* Tools row */
+.tools-strip { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:48px; padding-top:36px; border-top:1px solid var(--card-border); max-width:1100px; margin-left:auto; margin-right:auto; }
+.tool-pill { display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--card-border); border-radius:50px; padding:9px 18px; font-size:.83rem; font-weight:500; color:var(--text-muted); transition:.25s; }
+.tool-pill:hover { border-color:var(--accent); color:var(--accent); background:rgba(108,99,255,.07); transform:translateY(-3px); }
+.tool-pill .tp-icon { font-size:1.1rem; }
+
+/* ── UI/UX DESIGN SECTION ── */
+#uiux { background:var(--bg); position:relative; overflow:hidden; }
+.uiux-showcase { display:grid; grid-template-columns:1.2fr 1fr; gap:60px; align-items:start; max-width:1200px; margin:0 auto; }
+.uiux-tools { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.uiux-tool-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:20px; transition:.2s; display:flex; align-items:center; gap:14px; }
+.uiux-tool-card:hover { border-color:rgba(108,99,255,.35); background:rgba(108,99,255,.05); transform:translateX(4px); }
+.utc-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+.utc-name { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; }
+.utc-desc { font-size:.78rem; color:var(--text-muted); margin-top:2px; }
+
+/* Internship highlight card */
+.uiux-internship { background:var(--card); border:1px solid rgba(108,99,255,.25); border-radius:20px; padding:28px; position:relative; overflow:hidden; }
+.uiux-internship::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(108,99,255,.06),rgba(255,107,157,.04)); pointer-events:none; }
+.intern-header { display:flex; align-items:flex-start; gap:14px; margin-bottom:18px; }
+.intern-logo { width:48px; height:48px; border-radius:14px; background:rgba(108,99,255,.15); border:1px solid rgba(108,99,255,.25); display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+.intern-company { font-size:.72rem; font-weight:600; letter-spacing:.5px; text-transform:uppercase; color:var(--accent); margin-bottom:3px; }
+.intern-role { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:4px; }
+.intern-date { font-size:.74rem; color:var(--text-muted); display:flex; align-items:center; gap:5px; }
+.intern-bullets { list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
+.intern-bullets li { display:flex; align-items:flex-start; gap:10px; font-size:.88rem; color:var(--text-muted); line-height:1.6; }
+.intern-bullets li::before { content:'→'; color:var(--accent); font-weight:700; margin-top:1px; flex-shrink:0; }
+.intern-cert { display:inline-flex; align-items:center; gap:8px; background:rgba(255,209,102,.08); border:1px solid rgba(255,209,102,.25); color:var(--accent4); padding:8px 16px; border-radius:50px; font-size:.78rem; font-weight:600; }
+
+.uiux-stats { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px; }
+.us-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:20px; text-align:center; }
+.us-num { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.us-label { font-size:.8rem; color:var(--text-muted); margin-top:4px; }
+
+/* EXPERIENCE */
+#experience { background:var(--bg2); position:relative; overflow:hidden; }
+.exp-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; max-width:1200px; margin:0 auto; }
+.exp-section-title { font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:700; margin-bottom:36px; display:flex; align-items:center; gap:10px; color:var(--text-muted); }
+.exp-section-title i { color:var(--accent); }
+.timeline { position:relative; }
+.timeline::before { content:''; position:absolute; left:20px; top:0; bottom:0; width:2px; background:linear-gradient(180deg,var(--accent),var(--accent2),transparent); border-radius:2px; }
+.timeline-item { position:relative; padding-left:56px; margin-bottom:36px; opacity:0; transform:translateX(-20px); transition:.6s; }
+.timeline-item.visible { opacity:1; transform:translateX(0); }
+.timeline-dot { position:absolute; left:12px; top:6px; width:18px; height:18px; border-radius:50%; border:2px solid var(--accent); background:var(--bg2); display:flex; align-items:center; justify-content:center; z-index:2; }
+.timeline-dot::after { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.timeline-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:22px; transition:.2s; }
+.timeline-card:hover { border-color:rgba(108,99,255,.3); background:rgba(108,99,255,.04); }
+.tc-company { font-size:.78rem; font-weight:600; letter-spacing:.5px; text-transform:uppercase; margin-bottom:4px; }
+.tc-role { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:6px; }
+.tc-date { font-size:.75rem; color:var(--text-muted); margin-bottom:10px; display:flex; align-items:center; gap:5px; }
+.tc-desc { font-size:.88rem; color:var(--text-muted); line-height:1.65; }
+.tc-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.tc-tag { font-size:.72rem; padding:3px 10px; border-radius:20px; }
+
+/* PROJECTS */
+#projects { background:var(--bg); position:relative; overflow:hidden; }
+.projects-filter { display:flex; gap:8px; justify-content:center; margin-bottom:48px; flex-wrap:wrap; }
+.filter-btn { background:var(--card); border:1px solid var(--card-border); color:var(--text-muted); padding:8px 18px; border-radius:50px; font-size:.82rem; cursor:none; transition:.25s; }
+.filter-btn.active, .filter-btn:hover { background:var(--gradient); color:#fff; border-color:transparent; }
+.projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:24px; max-width:1200px; margin:0 auto; }
+.project-card { background:var(--card); border:1px solid var(--card-border); border-radius:20px; overflow:hidden; transition:.35s; opacity:0; transform:translateY(24px); }
+.project-card.visible { opacity:1; transform:translateY(0); }
+.project-card:hover { transform:translateY(-8px); border-color:rgba(108,99,255,.3); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+.project-thumb { height:200px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.project-thumb .thumb-icon { font-size:4rem; color:rgba(255,255,255,.7); z-index:1; }
+.project-thumb .thumb-overlay { position:absolute; inset:0; background:rgba(10,10,15,.7); opacity:0; transition:.3s; display:flex; align-items:center; justify-content:center; gap:14px; z-index:2; }
+.project-card:hover .thumb-overlay { opacity:1; }
+.thumb-overlay-btn { width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; transition:.2s; }
+.thumb-overlay-btn:hover { background:var(--accent); border-color:var(--accent); transform:scale(1.1); }
+.project-body { padding:22px; }
+.project-cat { font-size:.72rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+.project-name { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:8px; }
+.project-desc { font-size:.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:14px; }
+.project-techs { display:flex; flex-wrap:wrap; gap:6px; }
+.project-tech { font-size:.72rem; padding:4px 10px; border-radius:20px; background:rgba(108,99,255,.1); border:1px solid rgba(108,99,255,.2); color:var(--accent); }
+
+/* DATA ANALYTICS */
+#analytics { background:var(--bg2); position:relative; overflow:hidden; }
+.analytics-showcase { display:grid; grid-template-columns:1.2fr 1fr; gap:60px; align-items:center; max-width:1200px; margin:0 auto; }
+.analytics-tools { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.analytics-tool-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:20px; transition:.2s; display:flex; align-items:center; gap:14px; }
+.analytics-tool-card:hover { border-color:rgba(0,212,255,.3); background:rgba(0,212,255,.04); transform:translateX(4px); }
+.atc-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+.atc-name { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; }
+.atc-desc { font-size:.78rem; color:var(--text-muted); margin-top:2px; }
+.analytics-stats { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.as-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:20px; text-align:center; }
+.as-num { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; background:var(--gradient2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.as-label { font-size:.8rem; color:var(--text-muted); margin-top:4px; }
+.mini-chart { display:flex; align-items:flex-end; gap:5px; height:60px; margin-top:14px; }
+.mc-bar { flex:1; border-radius:3px 3px 0 0; background:var(--gradient); opacity:.6; animation:grow-bar 1.5s ease-out forwards; transform-origin:bottom; transform:scaleY(0); }
+@keyframes grow-bar { to{transform:scaleY(1); opacity:1;} }
+
+/* CONTACT */
+#contact { background:var(--bg); position:relative; overflow:hidden; }
+.contact-wrap { display:grid; grid-template-columns:1fr 1.5fr; gap:60px; max-width:1100px; margin:0 auto; align-items:start; }
+.contact-info-card { background:var(--card); border:1px solid var(--card-border); border-radius:24px; padding:36px; }
+.cic-title { font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:700; margin-bottom:24px; }
+.contact-item { display:flex; align-items:flex-start; gap:14px; margin-bottom:22px; }
+.ci-icon { width:42px; height:42px; border-radius:12px; background:rgba(108,99,255,.1); border:1px solid rgba(108,99,255,.2); display:flex; align-items:center; justify-content:center; color:var(--accent); flex-shrink:0; }
+.ci-label { font-size:.73rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; }
+.ci-val { font-size:.92rem; font-weight:500; margin-top:2px; word-break:break-all; }
+.contact-form-card { background:var(--card); border:1px solid var(--card-border); border-radius:24px; padding:36px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.form-group { display:flex; flex-direction:column; gap:7px; margin-bottom:18px; }
+.form-group label { font-size:.82rem; font-weight:500; color:var(--text-muted); letter-spacing:.3px; }
+.form-group input, .form-group textarea, .form-group select {
+  background:rgba(255,255,255,.04); border:1px solid var(--card-border); border-radius:12px;
+  padding:13px 16px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:.92rem;
+  outline:none; transition:.25s; resize:none;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--accent); background:rgba(108,99,255,.05); box-shadow:0 0 0 3px rgba(108,99,255,.1); }
+.form-group textarea { min-height:130px; }
+.submit-btn { width:100%; background:var(--gradient); border:none; color:#fff; padding:15px; border-radius:12px; font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; cursor:none; transition:.25s; display:flex; align-items:center; justify-content:center; gap:10px; letter-spacing:.5px; }
+.submit-btn:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(108,99,255,.4); }
+
+/* FOOTER */
+footer { background:var(--bg2); border-top:1px solid var(--card-border); padding:44px 5%; text-align:center; }
+.footer-logo { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
+.footer-text { color:var(--text-muted); font-size:.85rem; }
+.footer-socials { display:flex; gap:10px; justify-content:center; margin:20px 0; }
+.footer-social { width:40px; height:40px; border-radius:10px; border:1px solid var(--card-border); background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--text-muted); text-decoration:none; transition:.2s; }
+.footer-social:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-3px); }
+
+/* TOAST */
+.toast { position:fixed; bottom:28px; right:28px; background:rgba(0,212,100,.15); border:1px solid rgba(0,212,100,.3); color:#00d464; padding:14px 22px; border-radius:14px; font-size:.9rem; z-index:9999; transform:translateY(100px); opacity:0; transition:.4s cubic-bezier(.23,1,.32,1); display:flex; align-items:center; gap:10px; }
+.toast.show { transform:translateY(0); opacity:1; }
+.toast.error { background:rgba(255,80,80,.12); border-color:rgba(255,80,80,.3); color:#ff5050; }
+
+/* MOBILE NAV */
+.mobile-nav { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10,10,15,.97); z-index:850; display:none; flex-direction:column; align-items:center; justify-content:center; gap:32px; }
+.mobile-nav.open { display:flex; }
+.mobile-nav a { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:700; color:var(--text); text-decoration:none; transition:.2s; }
+.mobile-nav a:hover { color:var(--accent); }
+.mobile-close { position:absolute; top:24px; right:24px; background:none; border:none; color:var(--text); font-size:1.5rem; cursor:none; }
+
+/* SCROLL DOT NAV */
+.scroll-nav { position:fixed; right:24px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px; z-index:100; }
+.sn-dot { width:10px; height:10px; border-radius:50%; background:var(--card-border); border:1px solid var(--card-border); cursor:none; transition:.3s; }
+.sn-dot.active { background:var(--accent); transform:scale(1.3); box-shadow:0 0 8px var(--accent); }
+@media(max-width:768px){.scroll-nav{display:none;}}
+
+/* ANIMATIONS */
+.reveal { opacity:0; transform:translateY(30px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hero-grid, .about-grid, .exp-grid, .analytics-showcase, .uiux-showcase, .contact-wrap { grid-template-columns:1fr; }
+  .hero-visual { margin-top:40px; }
+  .uiux-tools, .analytics-tools { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:768px){
+  .nav-links, .nav-btn { display:none; }
+  .hamburger { display:flex; }
+  .hero-stats { gap:20px; }
+  .projects-grid { grid-template-columns:1fr; }
+  .form-row { grid-template-columns:1fr; }
+  section { padding:70px 5%; }
+  .uiux-tools, .analytics-tools { grid-template-columns:1fr; }
+  .uiux-stats, .analytics-stats { grid-template-columns:1fr; }
+}
+
+/* Spinner */
+.spinner { display:none; width:18px; height:18px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg);} }
+.timeline-item:hover .timeline-card { border-color:rgba(108,99,255,.4); }
+.pulse-line { height:2px; background:var(--gradient2); border-radius:2px; animation:pulse-width 2s ease-in-out infinite; }
+@keyframes pulse-width { 0%,100%{opacity:.4; transform:scaleX(.6);} 50%{opacity:1; transform:scaleX(1);} }
+</style>
 </head>
-<body class="bg-gray-50">
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
+<body>
 
-    <!-- Cursor Follower -->
-    <div class="cursor-follower" id="cursorFollower"></div>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<div id="progress"></div>
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toast-msg">Message sent!</span></div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast"></div>
-
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator hidden md:block">
-        <div class="scroll-dot active" data-section="home"></div>
-        <div class="scroll-dot" data-section="about"></div>
-        <div class="scroll-dot" data-section="skills"></div>
-        <div class="scroll-dot" data-section="experience"></div>
-        <div class="scroll-dot" data-section="projects"></div>
-        <div class="scroll-dot" data-section="contact"></div>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-gray-800 flex items-center">
-                <span class="text-gradient mr-2">M</span>ohanasundar
-            </div>
-            <div class="hidden md:flex space-x-8">
-                <a href="#home" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Home</a>
-                <a href="#about" class="nav-link text-gray-600 hover:text-blue-600 font-medium">About</a>
-                <a href="#skills" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Skills</a>
-                <a href="#experience" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Experience</a>
-                <a href="#projects" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Projects</a>
-                <a href="#contact" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Contact</a>
-            </div>
-            <button class="md:hidden text-gray-600" id="mobileMenuButton">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center gradient-bg pt-16 relative overflow-hidden">
-        <!-- Animated Background Elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="particle" style="top: 10%; left: 10%; width: 30px; height: 30px; animation-duration: 20s;"></div>
-            <div class="particle" style="top: 70%; left: 80%; width: 50px; height: 50px; animation-duration: 25s;"></div>
-            <div class="particle" style="top: 40%; left: 60%; width: 40px; height: 40px; animation-duration: 30s;"></div>
-            <div class="particle" style="top: 20%; left: 40%; width: 25px; height: 25px; animation-duration: 15s;"></div>
-            <div class="particle" style="top: 80%; left: 20%; width: 35px; height: 35px; animation-duration: 22s;"></div>
-        </div>
-
-        <div class="container mx-auto px-6 py-20 flex flex-col md:flex-row items-center relative z-10">
-            <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right">
-                <div class="mb-4">
-                    <span class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium animate-pulse">UI/UX Designer & Trainer</span>
-                </div>
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
-                    Hello, I'm <span class="text-yellow-300 typing-animation">Mohanasundar</span>
-                </h1>
-                <h2 class="text-2xl md:text-3xl text-white mb-6 font-light">
-                    Crafting <span class="font-bold">Digital Experiences</span> That Inspire
-                </h2>
-                <p class="text-gray-200 text-lg mb-8 max-w-xl leading-relaxed">
-                    An innovative problem-solver with expertise in app development and user-centric design, creating seamless digital experiences that users love.
-                </p>
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#projects" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium text-center hover:bg-gray-100 transition duration-300 shadow-lg flex items-center justify-center gap-2 animate-bounce-slow">
-                        <span>View My Work</span>
-                        <i class="fas fa-arrow-down"></i>
-                    </a>
-                    <a href="#contact" class="border border-white text-white px-6 py-3 rounded-lg font-medium text-center hover:bg-white/10 transition duration-300 flex items-center justify-center gap-2">
-                        <span>Hire Me</span>
-                        <i class="fas fa-paper-plane"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="md:w-1/2 flex justify-center" data-aos="fade-left" data-aos-delay="300">
-                <div class="relative">
-                    <div class="w-80 h-80 bg-white/20 rounded-full flex items-center justify-center floating morph-shape">
-                        <div class="w-64 h-64 bg-white/30 rounded-full flex items-center justify-center morph-shape">
-                            <div class="w-48 h-48 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-2xl morph-shape">
-                                <!-- Replace with your image -->
-                                <img src="mohan.jpeg" alt="Mohanasundar" class="w-full h-full object-cover">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="absolute -top-4 -right-4 bg-yellow-400 text-gray-800 p-4 rounded-lg shadow-lg animate-pulse-slow">
-                        <div class="text-center">
-                            <div class="text-xl font-bold">1+</div>
-                            <div class="text-sm">Years Experience</div>
-                        </div>
-                    </div>
-                    <div class="absolute -bottom-4 -left-4 bg-white text-blue-600 p-4 rounded-lg shadow-lg animate-bounce-slow">
-                        <div class="text-center">
-                            <div class="text-xl font-bold">10+</div>
-                            <div class="text-sm">Projects</div>
-                        </div>
-                    </div>
-                    <div class="absolute top-10 -right-10 bg-green-400 text-white p-3 rounded-lg shadow-lg animate-wiggle">
-                        <div class="text-center">
-                            <div class="text-sm font-bold">Available</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <a href="#about" class="text-white text-2xl">
-                <i class="fas fa-chevron-down"></i>
-            </a>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
-        <div class="absolute bottom-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float" style="animation-delay: 2s"></div>
-        
-        <div class="container mx-auto px-6 relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">About <span class="text-gradient">Me</span></h2>
-            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
-                An innovative problem-solver with a solid foundation in app development, Android Studio, and UI/UX design.
-            </p>
-            
-            <div class="flex flex-col lg:flex-row gap-12">
-                <div class="lg:w-2/3" data-aos="fade-right">
-                    <div class="bg-gray-50 p-8 rounded-2xl shadow-md mb-8 card-hover">
-                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
-                            I am highly skilled in crafting <span class="font-bold text-blue-600">user-centric, high-performance applications</span>. Proficient in Flutter and Dart, I develop cross-platform solutions that balance functionality with seamless design.
-                        </p>
-                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
-                            My expertise includes building responsive user interfaces, integrating APIs, and optimizing application performance. I excel in adapting to evolving project requirements, collaborating with teams to address challenges, and ensuring timely delivery of solutions.
-                        </p>
-                        <p class="text-gray-700 text-lg leading-relaxed">
-                            Committed to delivering high-quality applications, I focus on enhancing user experiences through intuitive designs and robust functionality. Passionate about technology, I strive to create impactful, efficient applications.
-                        </p>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="bg-gradient-to-br from-blue-500 to-purple-600 text-white p-4 rounded-xl text-center card-hover">
-                            <div class="text-2xl font-bold">10+</div>
-                            <div class="text-sm">Projects Done</div>
-                        </div>
-                        <div class="bg-gradient-to-br from-green-500 to-blue-600 text-white p-4 rounded-xl text-center card-hover">
-                            <div class="text-2xl font-bold">1+</div>
-                            <div class="text-sm">Years Experience</div>
-                        </div>
-                        <div class="bg-gradient-to-br from-purple-500 to-pink-600 text-white p-4 rounded-xl text-center card-hover">
-                            <div class="text-2xl font-bold">5+</div>
-                            <div class="text-sm">Happy Clients</div>
-                        </div>
-                        <div class="bg-gradient-to-br from-yellow-500 to-orange-600 text-white p-4 rounded-xl text-center card-hover">
-                            <div class="text-2xl font-bold">1+</div>
-                            <div class="text-sm">Design Awards</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="lg:w-1/3" data-aos="fade-left" data-aos-delay="200">
-                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl shadow-md border border-blue-100">
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">Personal Info</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center">
-                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
-                                    <i class="fas fa-user text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-600 text-sm">Name</p>
-                                    <p class="font-medium">Mohanasundar</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
-                                    <i class="fas fa-envelope text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-600 text-sm">Email</p>
-                                    <p class="font-medium">mohanasundars909@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
-                                    <i class="fas fa-phone text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-600 text-sm">Phone</p>
-                                    <p class="font-medium">+91 6383634491</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
-                                    <i class="fas fa-briefcase text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-600 text-sm">Experience</p>
-                                    <p class="font-medium">1+ Years</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
-                                    <i class="fas fa-graduation-cap text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-600 text-sm">Education</p>
-                                    <p class="font-medium">B.Tech (AI & DS)</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="bg-green-100 p-2 rounded-lg mr-3">
-                                    <i class="fas fa-check-circle text-green-600"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-600 text-sm">Availability</p>
-                                    <p class="font-medium text-green-600">Open to Opportunities</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <h3 class="text-xl font-bold text-gray-800 mt-6 mb-4">Connect With Me</h3>
-                        <div class="flex space-x-4">
-                            <a href="https://www.linkedin.com/in/mohanasundar-s-81b960220/" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition duration-300 skill-icon">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="https://github.com/moha0808" class="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300 skill-icon">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://www.figma.com/proto/2OGZFAWPSXehujJeDSDnM7?node-id=0-1&t=kcjZtERWwG4oBmyp-6" class="bg-purple-600 text-white p-3 rounded-full hover:bg-purple-700 transition duration-300 skill-icon">
-                                <i class="fab fa-figma"></i>
-                            </a>
-                            <a href="https://www.behance.net/20ad033mohansu" class="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition duration-300 skill-icon">
-                                <i class="fab fa-dribbble"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="py-20 bg-gray-50 relative overflow-hidden">
-        <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
-        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float" style="animation-delay: 3s"></div>
-        
-        <div class="container mx-auto px-6 relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">My <span class="text-gradient">Skills</span></h2>
-            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
-                A comprehensive overview of my technical skills and design expertise.
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <!-- UI/UX Design Skills -->
-                <div class="bg-white p-6 rounded-2xl shadow-md card-hover" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-purple-100 p-3 rounded-lg mr-4">
-                            <i class="fas fa-palette text-purple-600 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">UI/UX Design</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">Creating intuitive and beautiful user experiences</p>
-                    <div class="space-y-3">
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">User Research</span>
-                            <span class="text-blue-600 font-bold">95%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-purple-600 h-2 rounded-full skill-bar" style="width: 95%"></div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">Wireframing</span>
-                            <span class="text-blue-600 font-bold">90%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-purple-600 h-2 rounded-full skill-bar" style="width: 90%"></div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">Prototyping</span>
-                            <span class="text-blue-600 font-bold">92%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-purple-600 h-2 rounded-full skill-bar" style="width: 92%"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Development Skills -->
-                <div class="bg-white p-6 rounded-2xl shadow-md card-hover" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-blue-100 p-3 rounded-lg mr-4">
-                            <i class="fas fa-code text-blue-600 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">Development</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">Building robust and scalable applications</p>
-                    <div class="space-y-3">
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">Flutter/Dart</span>
-                            <span class="text-blue-600 font-bold">88%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-blue-600 h-2 rounded-full skill-bar" style="width: 88%"></div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">JavaScript</span>
-                            <span class="text-blue-600 font-bold">80%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-blue-600 h-2 rounded-full skill-bar" style="width: 80%"></div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">HTML/CSS</span>
-                            <span class="text-blue-600 font-bold">85%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-blue-600 h-2 rounded-full skill-bar" style="width: 85%"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Tools & Software -->
-                <div class="bg-white p-6 rounded-2xl shadow-md card-hover" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-green-100 p-3 rounded-lg mr-4">
-                            <i class="fas fa-tools text-green-600 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">Tools & Software</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">Mastering the tools of the trade</p>
-                    <div class="space-y-3">
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">Figma</span>
-                            <span class="text-blue-600 font-bold">95%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-green-600 h-2 rounded-full skill-bar" style="width: 95%"></div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">Adobe XD</span>
-                            <span class="text-blue-600 font-bold">85%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-green-600 h-2 rounded-full skill-bar" style="width: 85%"></div>
-                        </div>
-                         <div class="flex justify-between">
-                            <span class="text-gray-700">Visual Studio </span>
-                            <span class="text-blue-600 font-bold">85%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-green-600 h-2 rounded-full skill-bar" style="width: 85%"></div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">Android Studio</span>
-                            <span class="text-blue-600 font-bold">80%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-green-600 h-2 rounded-full skill-bar" style="width: 80%"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Soft Skills -->
-                <div class="bg-white p-6 rounded-2xl shadow-md card-hover" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-yellow-100 p-3 rounded-lg mr-4">
-                            <i class="fas fa-users text-yellow-600 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">Soft Skills</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">Essential skills for collaboration and leadership</p>
-                    <div class="space-y-3">
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">Communication</span>
-                            <span class="text-blue-600 font-bold">90%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-yellow-600 h-2 rounded-full skill-bar" style="width: 90%"></div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">Problem Solving</span>
-                            <span class="text-blue-600 font-bold">92%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-yellow-600 h-2 rounded-full skill-bar" style="width: 92%"></div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">Team Collaboration</span>
-                            <span class="text-blue-600 font-bold">88%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-yellow-600 h-2 rounded-full skill-bar" style="width: 88%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Skill Badges -->
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="100">
-                    <i class="fab fa-flutter text-blue-500 text-3xl mb-2"></i>
-                    <p class="font-medium">Flutter</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="150">
-                    <i class="fab fa-figma text-purple-500 text-3xl mb-2"></i>
-                    <p class="font-medium">Figma</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="200">
-                    <i class="fab fa-js-square text-yellow-500 text-3xl mb-2"></i>
-                    <p class="font-medium">JavaScript</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="250">
-                    <i class="fab fa-java text-red-500 text-3xl mb-2"></i>
-                    <p class="font-medium">Java</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="300">
-                    <i class="fab fa-python text-blue-400 text-3xl mb-2"></i>
-                    <p class="font-medium">Python</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="350">
-                    <i class="fas fa-database text-green-500 text-3xl mb-2"></i>
-                    <p class="font-medium">SQL</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="350">
-                    <i class="fas fa-database text-green-500 text-3xl mb-2"></i>
-                    <p class="font-medium">PowerBI</p>
-                </div>
-<div class="bg-white p-4 rounded-xl shadow-sm text-center card-hover" data-aos="flip-up" data-aos-delay="350">
-  <i class="fas fa-code text-purple-600 text-3xl mb-2"></i>
-  <p class="font-medium">Visual Studio</p>
+<!-- SCROLL NAV — Skills dot removed -->
+<div class="scroll-nav" id="scrollNav">
+  <div class="sn-dot active" data-target="home" title="Home"></div>
+  <div class="sn-dot" data-target="about" title="About"></div>
+  <div class="sn-dot" data-target="skills" title="Skills"></div>
+  <div class="sn-dot" data-target="uiux" title="UI/UX Design"></div>
+  <div class="sn-dot" data-target="analytics" title="Analytics"></div>
+  <div class="sn-dot" data-target="experience" title="Experience"></div>
+  <div class="sn-dot" data-target="projects" title="Projects"></div>
+  <div class="sn-dot" data-target="contact" title="Contact"></div>
 </div>
 
-            </div>
-        </div>
-    </section>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">MSR</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#uiux">UI/UX Design</a></li>
+    <li><a href="#analytics">Analytics</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-btn">Hire Me</a>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
 
-    <!-- Experience Section -->
-    <section id="experience" class="py-20 bg-white relative overflow-hidden">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">Experience & <span class="text-gradient">Education</span></h2>
-            
-            <div class="flex flex-col lg:flex-row gap-12 mt-12">
-                <!-- Experience -->
-                <div class="lg:w-1/2" data-aos="fade-right">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                        <i class="fas fa-briefcase text-blue-500 mr-3"></i> Experience
-                    </h3>
-                    
-                    <div class="space-y-8 relative">
-                        <!-- Timeline line -->
-                        <div class="absolute left-8 top-0 bottom-0 w-1 bg-blue-200 rounded-full"></div>
-                        
-                        <!-- Experience 1 -->
-                        <div class="relative flex items-start" data-aos="fade-right" data-aos-delay="100">
-                            <div class="bg-blue-500 rounded-full p-2 z-10">
-                                <div class="bg-white rounded-full p-1">
-                                    <i class="fas fa-rocket text-blue-500 text-sm"></i>
-                                </div>
-                            </div>
-                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-blue-500 card-hover w-full">
-                                <h4 class="text-xl font-bold text-gray-800">UI/UX Designer and Trainer</h4>
-                                <p class="text-blue-600 font-medium">VEI TECHNOLOGIES</p>
-                                <p class="text-gray-500 text-sm mb-3">Jan 2025 - Present</p>
-                                <p class="text-gray-700">Passionate UI/UX Designer and Trainer with expertise in crafting intuitive digital experiences and mentoring aspiring designers. Collaborated with cross-functional teams to conduct user research, implement feedback, and enhance usability.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Experience 2 -->
-                        <div class="relative flex items-start" data-aos="fade-right" data-aos-delay="200">
-                            <div class="bg-purple-500 rounded-full p-2 z-10">
-                                <div class="bg-white rounded-full p-1">
-                                    <i class="fas fa-palette text-purple-500 text-sm"></i>
-                                </div>
-                            </div>
-                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-purple-500 card-hover w-full">
-                                <h4 class="text-xl font-bold text-gray-800">Design Intern</h4>
-                                <p class="text-purple-600 font-medium">Airtory Interactive</p>
-                                <p class="text-gray-500 text-sm mb-3">Sep 2024 - Dec 2024</p>
-                                <p class="text-gray-700">Designed and delivered intuitive, user-friendly interfaces for web and mobile applications by creating wireframes, prototypes, and high-fidelity designs using tools like Figma and Adobe XD.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Experience 3 -->
-                        <div class="relative flex items-start" data-aos="fade-right" data-aos-delay="300">
-                            <div class="bg-green-500 rounded-full p-2 z-10">
-                                <div class="bg-white rounded-full p-1">
-                                    <i class="fas fa-code text-green-500 text-sm"></i>
-                                </div>
-                            </div>
-                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-green-500 card-hover w-full">
-                                <h4 class="text-xl font-bold text-gray-800">Flutter Developer</h4>
-                                <p class="text-green-600 font-medium">Teckzy Research Analytics IT Solutions</p>
-                                <p class="text-gray-500 text-sm mb-3">Apr 2024 - Jun 2024</p>
-                                <p class="text-gray-700">Developed dynamic mobile applications using Flutter, integrating REST APIs and Firebase for seamless data synchronization, user authentication, and real-time database functionality.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Education -->
-                <div class="lg:w-1/2" data-aos="fade-left" data-aos-delay="200">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                        <i class="fas fa-graduation-cap text-indigo-500 mr-3"></i> Education
-                    </h3>
-                    
-                    <div class="space-y-8 relative">
-                        <!-- Timeline line -->
-                        <div class="absolute left-8 top-0 bottom-0 w-1 bg-indigo-200 rounded-full"></div>
-                        
-                        <!-- Education 1 -->
-                        <div class="relative flex items-start" data-aos="fade-left" data-aos-delay="100">
-                            <div class="bg-indigo-500 rounded-full p-2 z-10">
-                                <div class="bg-white rounded-full p-1">
-                                    <i class="fas fa-university text-indigo-500 text-sm"></i>
-                                </div>
-                            </div>
-                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-indigo-500 card-hover w-full">
-                                <h4 class="text-xl font-bold text-gray-800">Bachelor of Technologies (AI&DS)</h4>
-                                <p class="text-indigo-600 font-medium">Muthayammal Engineering College</p>
-                                <p class="text-gray-500 text-sm mb-3">2020 - 2024</p>
-                                <p class="text-gray-700">Specialized in Artificial Intelligence and Data Science, gaining comprehensive knowledge in machine learning, data analysis, and software development.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Education 2 -->
-                        <div class="relative flex items-start" data-aos="fade-left" data-aos-delay="200">
-                            <div class="bg-pink-500 rounded-full p-2 z-10">
-                                <div class="bg-white rounded-full p-1">
-                                    <i class="fas fa-school text-pink-500 text-sm"></i>
-                                </div>
-                            </div>
-                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-pink-500 card-hover w-full">
-                                <h4 class="text-xl font-bold text-gray-800">Higher Secondary Education</h4>
-                                <p class="text-pink-600 font-medium">Sarswathi Matric Higher Secondary School</p>
-                                <p class="text-gray-500 text-sm mb-3">2018 - 2020</p>
-                                <p class="text-gray-700">Completed higher secondary education with focus on computer science and mathematics.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Education 3 -->
-                        <div class="relative flex items-start" data-aos="fade-left" data-aos-delay="300">
-                            <div class="bg-teal-500 rounded-full p-2 z-10">
-                                <div class="bg-white rounded-full p-1">
-                                    <i class="fas fa-book text-teal-500 text-sm"></i>
-                                </div>
-                            </div>
-                            <div class="ml-6 bg-gray-50 p-6 rounded-2xl shadow-sm border-l-4 border-teal-500 card-hover w-full">
-                                <h4 class="text-xl font-bold text-gray-800">Matric Secondary Education</h4>
-                                <p class="text-teal-600 font-medium">Government Higher Secondary School</p>
-                                <p class="text-gray-500 text-sm mb-3">2014 - 2018</p>
-                                <p class="text-gray-700">Completed secondary education with distinction in science subjects.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileClose"><i class="fas fa-times"></i></button>
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#skills" onclick="closeMobile()">Skills</a>
+  <a href="#uiux" onclick="closeMobile()">UI/UX Design</a>
+  <a href="#analytics" onclick="closeMobile()">Analytics</a>
+  <a href="#experience" onclick="closeMobile()">Experience</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-gray-50 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float" style="animation-delay: 2s"></div>
-        
-        <div class="container mx-auto px-6 relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">My <span class="text-gradient">Projects</span></h2>
-            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
-                A showcase of my recent projects and creative work in UI/UX design and development.
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="100">
-                    <div class="flip-card-inner h-full">
-                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
-                            <div class="h-48 bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center relative">
-                                <i class="fas fa-shopping-cart text-white text-6xl"></i>
-                                <div class="absolute top-4 right-4 bg-white text-blue-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">E-commerce App</h3>
-                                <p class="text-gray-600 mb-4">Built a fully functional e-commerce application with product search, cart management, and smooth UI.</p>
-                                <div class="flex flex-wrap gap-2 mt-4">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
-                                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Flutter</span>
-                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">UI Design</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
-                            <h3 class="text-xl font-bold text-white mb-4">E-commerce App</h3>
-                            <p class="text-white text-center mb-6">A complete shopping experience with intuitive navigation and seamless checkout process.</p>
-                            <a href="https://github.com/moha0808/e_commerceapp" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
-                                View Project
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 2 -->
-                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="200">
-                    <div class="flip-card-inner h-full">
-                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
-                            <div class="h-48 bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center relative">
-                                <i class="fas fa-print text-white text-6xl"></i>
-                                <div class="absolute top-4 right-4 bg-white text-green-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">Clone Port E Stationary</h3>
-                                <p class="text-gray-600 mb-4">Developed an app for printing and document services with nearby stationary shops.</p>
-                                <div class="flex flex-wrap gap-2 mt-4">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
-                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Flutter</span>
-                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">UX Research</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
-                            <h3 class="text-xl font-bold text-white mb-4">Port E Stationary</h3>
-                            <p class="text-white text-center mb-6">Connecting users with local stationary services for all their printing needs.</p>
-                            <a href="https://github.com/moha0808/e_cloneport" class="bg-white text-green-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
-                                View Project
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 3 -->
-                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="300">
-                    <div class="flip-card-inner h-full">
-                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
-                            <div class="h-48 bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center relative">
-                                <i class="fas fa-clock text-white text-6xl"></i>
-                                <div class="absolute top-4 right-4 bg-white text-yellow-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">Reminder App</h3>
-                                <p class="text-gray-600 mb-4">A customizable reminder app with animations and clock widgets.</p>
-                                <div class="flex flex-wrap gap-2 mt-4">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
-                                    <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Flutter</span>
-                                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Animations</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
-                            <h3 class="text-xl font-bold text-white mb-4">Reminder App</h3>
-                            <p class="text-white text-center mb-6">Never miss important tasks with this beautifully designed reminder application.</p>
-                            <a href="https://github.com/moha0808/DailyRemainder" class="bg-white text-orange-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
-                                View Project
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 4 -->
-                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="400">
-                    <div class="flip-card-inner h-full">
-                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
-                            <div class="h-48 bg-gradient-to-r from-red-400 to-pink-500 flex items-center justify-center relative">
-                                <i class="fas fa-heartbeat text-white text-6xl"></i>
-                                <div class="absolute top-4 right-4 bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">Tea Brands Website</h3>
-                                <p class="text-gray-600 mb-4">Tea brands' websites offer a variety of features, highlighting rich traditions, premium blends, and innovations in healthy alternatives. Leading sites such as Teabox, Organic India, and Society Tea focus on quality sourcing and engaging digital experiences for tea lovers.</p>
-                                <div class="flex flex-wrap gap-2 mt-4">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
-                                    <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">UI Design</span>
-                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">User Research</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
-                            <h3 class="text-xl font-bold text-white mb-4">Tea Brands Website</h3>
-                            <p class="text-white text-center mb-6">Tea brands' websites offer a variety of features, highlighting rich traditions, premium blends, and innovations in healthy alternatives. Leading sites such as Teabox, Organic India, and Society Tea focus on quality sourcing and engaging digital experiences for tea lovers.</p>
-                            <a href="https://www.figma.com/design/4vfnOfbsOHZbWPuJWwtMPt/Tea-Brands?t=8GVXhsEmeCs8VGNo-0" class="bg-white text-pink-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
-                                View Project
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 5 -->
-                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="500">
-                    <div class="flip-card-inner h-full">
-                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
-                            <div class="h-48 bg-gradient-to-r from-teal-400 to-cyan-500 flex items-center justify-center relative">
-                                <i class="fas fa-wallet text-white text-6xl"></i>
-                                <div class="absolute top-4 right-4 bg-white text-teal-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">Clone Port E-Staionary</h3>
-                                <p class="text-gray-600 mb-4">Clone Port E-Stationary is an app designed to connect users with nearby printing and document services through a network of stationary shops. It allows users to easily locate and access various printing, scanning, and stationery services, streamlining the process of finding such options in their vicinity. The app focuses on convenience and accessibility for both everyday users and businesses needing quick, reliable document solutions.</p>
-                                <div class="flex flex-wrap gap-2 mt-4">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
-                                    <span class="bg-teal-100 text-teal-800 text-xs px-2 py-1 rounded">UI Design</span>
-                                    <span class="bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded">Prototyping</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
-                            <h3 class="text-xl font-bold text-white mb-4">Clone Port E-Staionary</h3>
-                            <p class="text-white text-center mb-6">Clone Port E-Stationary is an app designed to connect users with nearby printing and document services through a network of stationary shops. It allows users to easily locate and access various printing, scanning, and stationery services, streamlining the process of finding such options in their vicinity. The app focuses on convenience and accessibility for both everyday users and businesses needing quick, reliable document solutions.</p>
-                            <a href="https://www.figma.com/design/ctqWs0MwUb1P2TLHLQtCvn/Redesign-clone-port?node-id=2-63&t=pg4RLiL1anJG4NY6-0" class="bg-white text-cyan-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
-                                View Project
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 6 -->
-                <div class="flip-card h-80" data-aos="flip-left" data-aos-delay="600">
-                    <div class="flip-card-inner h-full">
-                        <div class="flip-card-front bg-white rounded-2xl overflow-hidden shadow-lg">
-                            <div class="h-48 bg-gradient-to-r from-indigo-400 to-purple-500 flex items-center justify-center relative">
-                                <i class="fas fa-music text-white text-6xl"></i>
-                                <div class="absolute top-4 right-4 bg-white text-indigo-600 px-3 py-1 rounded-full text-sm font-bold">UI/UX</div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">Personal Website With Responsible </h3>
-                                <p class="text-gray-600 mb-4">A personal website with a responsible design is modern, visually bold, and fully responsive—adapting seamlessly to any device. It features clean layouts, accessible color schemes, smooth animations, and custom visuals to reflect individuality while remaining easy and inclusive for all users</p>
-                                <div class="flex flex-wrap gap-2 mt-4">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Figma</span>
-                                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">UI Design</span>
-                                    <span class="bg-purple-100 text-purple-800 text-xs px-2py-1 rounded">Prototyping</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back rounded-2xl flex flex-col justify-center items-center p-6">
-                            <h3 class="text-xl font-bold text-white mb-4">Personal Website With Responsible</h3>
-                            <p class="text-white text-center mb-6">A personal website with a responsible design is modern, visually bold, and fully responsive—adapting seamlessly to any device. It features clean layouts, accessible color schemes, smooth animations, and custom visuals to reflect individuality while remaining easy and inclusive for all users</p>
-                            <a href="https://www.figma.com/site/etWKMhjtfHhDr8J4zaNbYN/Mohan-Profile?node-id=0-1&p=f&t=x1lJl6DkowSk8oCB-0" class="bg-white text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
-                                View Project
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12" data-aos="fade-up">
-                <a href="#contact" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition duration-300 inline-flex items-center">
-                    <span>Start a Project With Me</span>
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
+<!-- ===== HERO ===== -->
+<section id="home">
+  <div class="bg-glow glow-purple" style="width:500px;height:500px;top:-100px;left:-150px;"></div>
+  <div class="bg-glow glow-pink" style="width:400px;height:400px;bottom:-100px;right:-100px;"></div>
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-badge reveal"><div class="dot"></div> Currently at VEI Technologies</div>
+      <h1 class="hero-title reveal" style="transition-delay:.1s">Hi, I'm<br><span class="name">Mohanasundar</span></h1>
+      <p class="hero-roles reveal" style="transition-delay:.2s">UI/UX Designer &amp; <span>Technical Trainer</span> · <span>Data Analyst</span></p>
+      <p class="hero-desc reveal" style="transition-delay:.3s">Crafting intuitive digital experiences, training the next generation of designers, and unlocking insights through data — all in one creative workflow.</p>
+      <div class="hero-btns reveal" style="transition-delay:.4s">
+        <a href="#projects" class="btn-primary"><i class="fas fa-eye"></i> View Work</a>
+        <a href="#contact" class="btn-secondary"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+      </div>
+      <div class="hero-stats reveal" style="transition-delay:.5s">
+        <div class="stat-item"><div class="stat-num">1+</div><div class="stat-label">Years Exp</div></div>
+        <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Projects</div></div>
+        <div class="stat-item"><div class="stat-num">5+</div><div class="stat-label">Clients</div></div>
+        <div class="stat-item"><div class="stat-num">250+</div><div class="stat-label">Students</div></div>
+      </div>
+    </div>
+    <div class="hero-visual reveal" style="transition-delay:.3s">
+      <div class="hero-avatar-ring">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="avatar-blob">
+          <img src="mohan.jpeg" alt="Mohanasundar" style="width:100%; height:100%; object-fit:cover;" />
         </div>
-    </section>
+        <div class="hero-float-card">
+          <div class="fc-icon">🎨</div>
+          <div class="fc-label">Role</div>
+          <div class="fc-value">UI/UX Designer</div>
+        </div>
+        <div class="hero-float-card">
+          <div class="fc-icon">📊</div>
+          <div class="fc-label">Expertise</div>
+          <div class="fc-value">Data Analytics</div>
+        </div>
+        <div class="hero-float-card">
+          <div class="fc-icon">🏆</div>
+          <div class="fc-label">Trainer</div>
+          <div class="fc-value">Technical Skills</div>
+        </div>
+      </div>
+      <div class="available-badge">Available for Work</div>
+    </div>
+  </div>
+</section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white relative overflow-hidden">
-        <div class="absolute -top-40 -left-40 w-80 h-80 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
-        <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float" style="animation-delay: 3s"></div>
-        
-        <div class="container mx-auto px-6 relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-up">Contact <span class="text-gradient">Me</span></h2>
-            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
-                I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.
-            </p>
-            
-            <div class="flex flex-col lg:flex-row gap-12">
-                <!-- Contact Info -->
-                <div class="lg:w-1/3" data-aos="fade-right">
-                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl shadow-md border border-blue-100">
-                        <h3 class="text-xl font-bold text-gray-800 mb-6">Get in Touch</h3>
-                        
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
-                                    <i class="fas fa-phone text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800">Phone</h4>
-                                    <p class="text-gray-600">+91 6383634491</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
-                                    <i class="fas fa-envelope text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800">Email</h4>
-                                    <p class="text-gray-600">mohanasundars909@gmail.com</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
-                                    <i class="fab fa-linkedin text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800">LinkedIn</h4>
-                                    <p class="text-gray-600">linkedin.com/in/mohanasundar-s-81b960220</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
-                                    <i class="fab fa-github text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800">GitHub</h4>
-                                    <p class="text-gray-600">github.com/moha0808</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
-                                    <i class="fab fa-figma text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800">Figma</h4>
-                                    <p class="text-gray-600">figma.com/@mohanasundar</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8">
-                            <h4 class="font-bold text-gray-800 mb-4">Let's Connect</h4>
-                            <div class="flex space-x-4">
-                                <a href="https://www.linkedin.com/in/mohanasundar-s-81b960220/" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition duration-300 skill-icon">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="https://github.com/moha0808" class="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300 skill-icon">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="https://www.figma.com/proto/2OGZFAWPSXehujJeDSDnM7?node-id=0-1&t=kcjZtERWwG4oBmyp-6" class="bg-purple-600 text-white p-3 rounded-full hover:bg-purple-700 transition duration-300 skill-icon">
-                                    <i class="fab fa-figma"></i>
-                                </a>
-                                <a href="https://www.behance.net/20ad033mohansu" class="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition duration-300 skill-icon">
-                                    <i class="fab fa-dribbble"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Contact Form -->
-                <div class="lg:w-2/3" data-aos="fade-left" data-aos-delay="200">
-                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl shadow-md border border-blue-100">
-                        <form id="contactForm" class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="name" class="block text-gray-700 font-medium mb-2">Name *</label>
-                                    <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300" required>
-                                </div>
-                                <div>
-                                    <label for="email" class="block text-gray-700 font-medium mb-2">Email *</label>
-                                    <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300" required>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300">
-                            </div>
-                            
-                            <div>
-                                <label for="subject" class="block text-gray-700 font-medium mb-2">Subject *</label>
-                                <input type="text" id="subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300" required>
-                            </div>
-                            
-                            <div>
-                                <label for="message" class="block text-gray-700 font-medium mb-2">Message *</label>
-                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300" required></textarea>
-                            </div>
-                            
-                            <button type="submit" id="submitBtn" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition duration-300 w-full md:w-auto flex items-center justify-center gap-2">
-                                <span id="submitText">Send Message</span>
-                                <div id="submitSpinner" class="loading-spinner hidden"></div>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="bg-glow glow-cyan" style="width:400px;height:400px;top:0;right:0;"></div>
+  <div class="about-grid">
+    <div class="about-image-wrap reveal">
+      <div class="about-img-box">
+        <div class="img-placeholder">
+          <img src="mohan.jpeg" alt="Mohanasundar's Photo" loading="lazy" decoding="async">
         </div>
-    </section>
+      </div>
+      <div class="about-skills-snap">
+        <span class="skill-tag">Figma Expert</span>
+        <span class="skill-tag">Flutter Dev</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">User Research</span>
+        <span class="skill-tag">Data Analytics</span>
+        <span class="skill-tag">Prototyping</span>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.15s">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Designing, Analyzing &amp; <span>Teaching</span></h2>
+      <p style="color:var(--text-muted);line-height:1.8;margin-bottom:18px;">
+        I'm a multidisciplinary professional combining <strong style="color:var(--text)">UI/UX Design</strong>, <strong style="color:var(--text)">Data Analytics</strong>, and <strong style="color:var(--text)">Technical Training</strong> under one roof. With a B.Tech in AI &amp; Data Science from Muthayammal Engineering College, I bring a data-informed approach to every design decision.
+      </p>
+      <p style="color:var(--text-muted);line-height:1.8;margin-bottom:28px;">
+        At VEI Technologies, I craft intuitive digital experiences and mentor aspiring designers and developers — helping them turn ideas into production-ready products. My analytical background enables me to turn raw data into compelling visual stories through Power BI, SQL, and Python.
+      </p>
+      <div class="about-info-grid">
+        <div class="info-item">
+          <div class="info-icon">📧</div>
+          <div class="info-label">Email</div>
+          <div class="info-val" style="font-size:.82rem;">mohanasundars909@gmail.com</div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📱</div>
+          <div class="info-label">Phone</div>
+          <div class="info-val">+91 6383634491</div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🎓</div>
+          <div class="info-label">Education</div>
+          <div class="info-val">B.Tech (AI &amp; DS)</div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-label">Location</div>
+          <div class="info-val">Salem, Tamil Nadu, India</div>
+        </div>
+      </div>
+      <div class="socials-row">
+        <a href="https://www.linkedin.com/in/mohanasundar-s-81b960220/" class="social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://github.com/moha0808" class="social-btn" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.figma.com/proto/2OGZFAWPSXehujJeDSDnM7?node-id=0-1" class="social-btn" title="Figma"><i class="fab fa-figma"></i></a>
+        <a href="https://www.behance.net/20ad033mohansu" class="social-btn" title="Behance"><i class="fab fa-behance"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12 relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="text-2xl font-bold flex items-center">
-                        <span class="text-gradient mr-2">M</span>ohanasundar
-                    </h3>
-                    <p class="text-gray-400 mt-2">UI/UX Designer and Trainer</p>
-                </div>
-                
-                <div class="flex space-x-4 mb-6 md:mb-0">
-                    <a href="https://linkedin.com/in/mohanasundar" class="bg-gray-700 text-white p-3 rounded-full hover:bg-blue-600 transition duration-300 skill-icon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://github.com/mohanasundar" class="bg-gray-700 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300 skill-icon">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://figma.com/mohanasundar" class="bg-gray-700 text-white p-3 rounded-full hover:bg-purple-600 transition duration-300 skill-icon">
-                        <i class="fab fa-figma"></i>
-                    </a>
-                    <a href="https://www.behance.net/20ad033mohansu" class="bg-gray-700 text-white p-3 rounded-full hover:bg-pink-600 transition duration-300 skill-icon">
-                        <i class="fab fa-dribbble"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 Mohanasundar S. All rights reserved.</p>
-                <p class="mt-2">Designed with <i class="fas fa-heart text-red-500"></i> and <i class="fas fa-coffee text-yellow-500"></i></p>
-            </div>
-        </div>
-    </footer>
+<!-- ===== SKILLS ===== -->
+<section id="skills">
+  <div class="bg-glow glow-purple" style="width:500px;height:500px;top:-100px;right:-200px;"></div>
+  <div class="bg-glow glow-cyan" style="width:350px;height:350px;bottom:-100px;left:-150px;"></div>
+  <div class="section-header">
+    <div class="section-label reveal">Skills</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">Tools &amp; <span>Technologies</span></h2>
+    <p class="section-desc reveal" style="transition-delay:.2s">From design to development to data — a full spectrum of skills built for modern digital challenges.</p>
+  </div>
+  <div class="skills-tabs reveal" style="transition-delay:.3s">
+    <button class="stab active" data-stab="uiux-s">🎨 UI/UX Design</button>
+    <button class="stab" data-stab="dev-s">💻 Development</button>
+    <button class="stab" data-stab="tools-s">🛠️ Tools &amp; Software</button>
+    <button class="stab" data-stab="soft-s">🌟 Soft Skills</button>
+  </div>
+  <div class="skills-panel active reveal" id="panel-uiux-s">
+    <div class="sp-header"><div class="sp-subtitle">UI/UX Design</div><div class="sp-caption">Creating intuitive and beautiful user experiences</div></div>
+    <div class="skill-bars">
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">User Research</span><span class="sbi-pct">95%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".95"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Wireframing</span><span class="sbi-pct">90%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".90"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Prototyping</span><span class="sbi-pct">92%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".92"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Design Systems</span><span class="sbi-pct">88%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".88"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Information Architecture</span><span class="sbi-pct">87%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".87"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Accessibility</span><span class="sbi-pct">85%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".85"></div></div></div>
+    </div>
+  </div>
+  <div class="skills-panel" id="panel-dev-s">
+    <div class="sp-header"><div class="sp-subtitle">Development</div><div class="sp-caption">Building robust and scalable applications</div></div>
+    <div class="skill-bars">
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Flutter / Dart</span><span class="sbi-pct">88%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".88"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">JavaScript</span><span class="sbi-pct">80%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".80"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">HTML / CSS</span><span class="sbi-pct">85%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".85"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Java</span><span class="sbi-pct">78%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".78"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Python</span><span class="sbi-pct">82%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".82"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Firebase</span><span class="sbi-pct">82%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".82"></div></div></div>
+    </div>
+  </div>
+  <div class="skills-panel" id="panel-tools-s">
+    <div class="sp-header"><div class="sp-subtitle">Tools &amp; Software</div><div class="sp-caption">Mastering the tools of the trade</div></div>
+    <div class="skill-bars">
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Figma</span><span class="sbi-pct">95%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".95"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Adobe XD</span><span class="sbi-pct">85%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".85"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Visual Studio</span><span class="sbi-pct">85%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".85"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Android Studio</span><span class="sbi-pct">80%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".80"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Power BI</span><span class="sbi-pct">87%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".87"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">SQL</span><span class="sbi-pct">85%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".85"></div></div></div>
+    </div>
+  </div>
+  <div class="skills-panel" id="panel-soft-s">
+    <div class="sp-header"><div class="sp-subtitle">Soft Skills</div><div class="sp-caption">Essential skills for collaboration and leadership</div></div>
+    <div class="skill-bars">
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Communication</span><span class="sbi-pct">90%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".90"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Problem Solving</span><span class="sbi-pct">92%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".92"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Team Collaboration</span><span class="sbi-pct">88%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".88"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Technical Training</span><span class="sbi-pct">95%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".95"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Team Leadership</span><span class="sbi-pct">88%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".88"></div></div></div>
+      <div class="skill-bar-item"><div class="sbi-top"><span class="sbi-name">Critical Thinking</span><span class="sbi-pct">90%</span></div><div class="sbi-track"><div class="sbi-fill" data-w=".90"></div></div></div>
+    </div>
+  </div>
+  <!-- Tools strip -->
+  <div class="tools-strip reveal" style="transition-delay:.4s">
+    <div class="tool-pill"><span class="tp-icon">📱</span> Flutter</div>
+    <div class="tool-pill"><span class="tp-icon">🎨</span> Figma</div>
+    <div class="tool-pill"><span class="tp-icon">⚡</span> JavaScript</div>
+    <div class="tool-pill"><span class="tp-icon">☕</span> Java</div>
+    <div class="tool-pill"><span class="tp-icon">🐍</span> Python</div>
+    <div class="tool-pill"><span class="tp-icon">🗄️</span> SQL</div>
+    <div class="tool-pill"><span class="tp-icon">📊</span> Power BI</div>
+    <div class="tool-pill"><span class="tp-icon">💻</span> Visual Studio</div>
+    <div class="tool-pill"><span class="tp-icon">🔥</span> Firebase</div>
+    <div class="tool-pill"><span class="tp-icon">🤖</span> Android Studio</div>
+  </div>
+</section>
 
-    <!-- Popup Overlay -->
-    <div class="popup-overlay" id="popupOverlay">
-        <div class="popup-content">
-            <button class="popup-close" id="popupClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <img src="1.jpg" alt="Project Image" class="popup-image">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4" id="popupTitle">Project Title</h3>
-            <p class="text-gray-600 mb-6" id="popupDescription">Project description goes here.</p>
-            <div class="flex flex-wrap gap-2 mb-6" id="popupTags"></div>
-            <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition duration-300" id="popupLink">
-                View Project
-            </a>
+<!-- ===== UI/UX DESIGN ===== -->
+<section id="uiux">
+  <div class="bg-glow glow-purple" style="width:500px;height:500px;bottom:-200px;left:-200px;"></div>
+  <div class="bg-glow glow-pink" style="width:350px;height:350px;top:-100px;right:-100px;"></div>
+  <div class="section-header">
+    <div class="section-label reveal">UI/UX Design</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">Crafting Experiences That <span>Matter</span></h2>
+    <p class="section-desc reveal" style="transition-delay:.2s">From wireframes to high-fidelity prototypes — designing with empathy, precision, and a data-backed approach to every decision.</p>
+  </div>
+  <div class="uiux-showcase">
+    <!-- Left: description + tools -->
+    <div class="reveal">
+      <p style="color:var(--text-muted);line-height:1.8;margin-bottom:28px;">
+        My design process is grounded in <strong style="color:var(--text)">user research</strong> and <strong style="color:var(--text)">iterative prototyping</strong>. With hands-on experience at Redmind Technologies and VEI Technologies, I've delivered interfaces for web and mobile platforms that balance aesthetics with usability — collaborating closely with development teams for pixel-perfect handoffs.
+      </p>
+      <div class="uiux-tools">
+        <div class="uiux-tool-card reveal">
+          <div class="utc-icon" style="background:rgba(108,99,255,.15);">🎨</div>
+          <div><div class="utc-name">Figma</div><div class="utc-desc">UI design, prototyping &amp; systems</div></div>
         </div>
+        <div class="uiux-tool-card reveal" style="transition-delay:.06s">
+          <div class="utc-icon" style="background:rgba(255,107,157,.15);">📐</div>
+          <div><div class="utc-name">Adobe XD</div><div class="utc-desc">Wireframes &amp; interactive flows</div></div>
+        </div>
+        <div class="uiux-tool-card reveal" style="transition-delay:.12s">
+          <div class="utc-icon" style="background:rgba(0,212,255,.15);">🔬</div>
+          <div><div class="utc-name">User Research</div><div class="utc-desc">Interviews, surveys &amp; usability</div></div>
+        </div>
+        <div class="uiux-tool-card reveal" style="transition-delay:.18s">
+          <div class="utc-icon" style="background:rgba(255,209,102,.15);">📱</div>
+          <div><div class="utc-name">Prototyping</div><div class="utc-desc">High-fidelity, clickable flows</div></div>
+        </div>
+        <div class="uiux-tool-card reveal" style="transition-delay:.24s">
+          <div class="utc-icon" style="background:rgba(108,99,255,.15);">🏗️</div>
+          <div><div class="utc-name">Design Systems</div><div class="utc-desc">Component libraries &amp; tokens</div></div>
+        </div>
+        <div class="uiux-tool-card reveal" style="transition-delay:.3s">
+          <div class="utc-icon" style="background:rgba(255,107,157,.15);">♿</div>
+          <div><div class="utc-name">Accessibility</div><div class="utc-desc">WCAG, inclusive design</div></div>
+        </div>
+      </div>
     </div>
 
-    <script>
-        // Initialize AOS (Animate On Scroll)
-        document.addEventListener('DOMContentLoaded', function() {
-            AOS.init({
-                duration: 1000,
-                once: true,
-                offset: 100,
-                disable: 'mobile'
-            });
-            
-            // Initialize EmailJS
-            (function(){
-                emailjs.init("YOUR_PUBLIC_KEY"); // You need to get this from EmailJS
-            })();
-            
-            // GSAP Animations
-            gsap.registerPlugin(ScrollTrigger);
-            
-            // Animate skill bars on scroll
-            gsap.utils.toArray('.skill-bar').forEach(bar => {
-                gsap.fromTo(bar, 
-                    { width: "0%" },
-                    {
-                        width: bar.style.width,
-                        duration: 2,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: bar,
-                            start: "top 80%",
-                            end: "bottom 20%",
-                            toggleActions: "play none none reverse"
-                        }
-                    }
-                );
-            });
-            
-            // Parallax effect for background elements
-            gsap.utils.toArray('.particle').forEach(particle => {
-                gsap.to(particle, {
-                    y: -100,
-                    scrollTrigger: {
-                        trigger: particle,
-                        start: "top bottom",
-                        end: "bottom top",
-                        scrub: true
-                    }
-                });
-            });
-            
-            // Mobile menu toggle
-            const menuButton = document.getElementById('mobileMenuButton');
-            const navMenu = document.querySelector('.hidden.md\\:flex');
-            
-            menuButton.addEventListener('click', function() {
-                navMenu.classList.toggle('hidden');
-                navMenu.classList.toggle('flex');
-                navMenu.classList.toggle('flex-col');
-                navMenu.classList.toggle('absolute');
-                navMenu.classList.toggle('bg-white');
-                navMenu.classList.toggle('w-full');
-                navMenu.classList.toggle('left-0');
-                navMenu.classList.toggle('top-16');
-                navMenu.classList.toggle('p-4');
-                navMenu.classList.toggle('shadow-lg');
-                navMenu.classList.toggle('space-y-4');
-            });
-            
-            // Contact Form Submission
-            const contactForm = document.getElementById('contactForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            const submitSpinner = document.getElementById('submitSpinner');
-            const toast = document.getElementById('toast');
-            
-            function showToast(message, isError = false) {
-                toast.textContent = message;
-                toast.className = isError ? 'toast error show' : 'toast show';
-                
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 4000);
-            }
-            
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Show loading state
-                    submitText.textContent = 'Sending...';
-                    submitSpinner.classList.remove('hidden');
-                    submitBtn.disabled = true;
-                    
-                    // Get form data
-                    const formData = new FormData(contactForm);
-                    const data = {
-                        name: formData.get('name'),
-                        email: formData.get('email'),
-                        phone: formData.get('phone'),
-                        subject: formData.get('subject'),
-                        message: formData.get('message'),
-                        to_phone: '+916383634491' // Your phone number
-                    };
-                    
-                    // Send SMS using Twilio (You'll need to set up a backend for this)
-                    // For now, we'll simulate sending and show success message
-                    
-                    // Simulate API call
-                    setTimeout(() => {
-                        // Reset form
-                        contactForm.reset();
-                        
-                        // Show success message
-                        showToast('Message sent successfully! I will get back to you soon.');
-                        
-                        // Reset button state
-                        submitText.textContent = 'Send Message';
-                        submitSpinner.classList.add('hidden');
-                        submitBtn.disabled = false;
-                        
-                        // Here you would typically send the data to your backend
-                        // which would then send an SMS to your phone
-                        console.log('Message details:', data);
-                        
-                        // Example of how to send to backend:
-                        // fetch('/send-message', {
-                        //     method: 'POST',
-                        //     headers: {
-                        //         'Content-Type': 'application/json',
-                        //     },
-                        //     body: JSON.stringify(data)
-                        // })
-                        // .then(response => response.json())
-                        // .then(data => {
-                        //     showToast('Message sent successfully!');
-                        //     contactForm.reset();
-                        // })
-                        // .catch(error => {
-                        //     showToast('Failed to send message. Please try again.', true);
-                        // });
-                        
-                    }, 2000);
-                });
-            }
-            
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Close mobile menu if open
-                        if (!navMenu.classList.contains('hidden')) {
-                            menuButton.click();
-                        }
-                    }
-                });
-            });
-            
-            // Scroll progress bar
-            window.addEventListener('scroll', function() {
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                document.getElementById("progressBar").style.width = scrolled + "%";
-                
-                // Update scroll indicator
-                const sections = document.querySelectorAll('section');
-                const scrollDots = document.querySelectorAll('.scroll-dot');
-                
-                let currentSection = '';
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    const sectionHeight = section.clientHeight;
-                    if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
-                        currentSection = section.getAttribute('id');
-                    }
-                });
-                
-                scrollDots.forEach(dot => {
-                    dot.classList.remove('active');
-                    if (dot.getAttribute('data-section') === currentSection) {
-                        dot.classList.add('active');
-                    }
-                });
-            });
-            
-            // Scroll indicator click
-            document.querySelectorAll('.scroll-dot').forEach(dot => {
-                dot.addEventListener('click', function() {
-                    const sectionId = this.getAttribute('data-section');
-                    const targetElement = document.getElementById(sectionId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Cursor follower
-            const cursorFollower = document.getElementById('cursorFollower');
-            document.addEventListener('mousemove', function(e) {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            });
-            
-            // Add hover effect to cursor follower
-            document.querySelectorAll('a, button, .card-hover').forEach(element => {
-                element.addEventListener('mouseenter', function() {
-                    cursorFollower.style.transform = 'scale(2)';
-                    cursorFollower.style.background = 'rgba(59, 130, 246, 0.3)';
-                });
-                element.addEventListener('mouseleave', function() {
-                    cursorFollower.style.transform = 'scale(1)';
-                    cursorFollower.style.background = 'rgba(59, 130, 246, 0.5)';
-                });
-            });
-            
-            // Add floating particles
-            function createParticle() {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                const size = Math.random() * 30 + 10;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
-                particle.style.opacity = Math.random() * 0.5 + 0.2;
-                document.getElementById('home').appendChild(particle);
-                
-                // Remove particle after animation completes
-                setTimeout(() => {
-                    particle.remove();
-                }, 30000);
-            }
-            
-            // Create initial particles
-            for (let i = 0; i < 10; i++) {
-                createParticle();
-            }
-            
-            // Continue creating particles
-            setInterval(createParticle, 2000);
-            
-            // Popup functionality
-            const popupOverlay = document.getElementById('popupOverlay');
-            const popupClose = document.getElementById('popupClose');
-            const popupTitle = document.getElementById('popupTitle');
-            const popupDescription = document.getElementById('popupDescription');
-            const popupTags = document.getElementById('popupTags');
-            const popupLink = document.getElementById('popupLink');
-            
-            // Close popup when clicking close button
-            popupClose.addEventListener('click', function() {
-                popupOverlay.classList.remove('active');
-            });
-            
-            // Close popup when clicking outside the content
-            popupOverlay.addEventListener('click', function(e) {
-                if (e.target === popupOverlay) {
-                    popupOverlay.classList.remove('active');
-                }
-            });
-            
-            // Close popup with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
-                    popupOverlay.classList.remove('active');
-                }
-            });
-            
-            // Add click events to project cards to open popup
-            document.querySelectorAll('.flip-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    const front = this.querySelector('.flip-card-front');
-                    const title = front.querySelector('h3').textContent;
-                    const description = front.querySelector('p').textContent;
-                    const tags = front.querySelectorAll('.bg-blue-100, .bg-purple-100, .bg-green-100, .bg-yellow-100, .bg-orange-100, .bg-pink-100, .bg-teal-100, .bg-cyan-100, .bg-indigo-100');
-                    const link = this.querySelector('.flip-card-back a').href;
-                    
-                    // Set popup content
-                    popupTitle.textContent = title;
-                    popupDescription.textContent = description;
-                    popupLink.href = link;
-                    
-                    // Clear previous tags
-                    popupTags.innerHTML = '';
-                    
-                    // Add tags to popup
-                    tags.forEach(tag => {
-                        const tagElement = document.createElement('span');
-                        tagElement.textContent = tag.textContent;
-                        tagElement.className = tag.className + ' text-xs px-2 py-1 rounded';
-                        popupTags.appendChild(tagElement);
-                    });
-                    
-                    // Show popup
-                    popupOverlay.classList.add('active');
-                });
-            });
-        });
-    </script>
+    <!-- Right: internship highlight + stats -->
+    <div class="reveal" style="transition-delay:.2s">
+      <!-- Internship Card -->
+      <div class="uiux-internship">
+        <div class="intern-header">
+          <div class="intern-logo">🖌️</div>
+          <div>
+            <div class="intern-company">Redmind Technologies</div>
+            <div class="intern-role">UI/UX Designer Intern</div>
+            <div class="intern-date"><i class="fas fa-calendar-alt"></i> Dec 2023 – Apr 2024</div>
+          </div>
+        </div>
+        <ul class="intern-bullets">
+          <li>Designed user-friendly interfaces for web and mobile platforms, ensuring branding consistency across all team deliverables.</li>
+          <li>Conducted stakeholder feedback loops to iterate on designs and supported UI implementation alongside development teams.</li>
+          <li>Collaborated cross-functionally to deliver production-ready screens with clear developer handoff documentation.</li>
+        </ul>
+        <div class="intern-cert"><i class="fas fa-certificate"></i> Certified UI/UX Designer in Figma — upon completion</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="uiux-stats" style="margin-top:20px;">
+        <div class="us-card">
+          <div class="us-num">6+</div>
+          <div class="us-label">Design Projects</div>
+        </div>
+        <div class="us-card">
+          <div class="us-num">95%</div>
+          <div class="us-label">Figma Proficiency</div>
+        </div>
+        <div class="us-card" style="grid-column:span 2;">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">
+            <div class="us-num" style="font-size:1.3rem;">Core Skills</div>
+            <div style="font-size:.85rem;color:var(--text-muted);">End-to-end design fluency from concept to coded handoff.</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span style="background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.2);color:var(--accent);padding:4px 12px;border-radius:20px;font-size:.75rem;">Wireframing</span>
+            <span style="background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.2);color:var(--accent);padding:4px 12px;border-radius:20px;font-size:.75rem;">Information Architecture</span>
+            <span style="background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.2);color:var(--accent);padding:4px 12px;border-radius:20px;font-size:.75rem;">Interaction Design</span>
+            <span style="background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.2);color:var(--accent);padding:4px 12px;border-radius:20px;font-size:.75rem;">Visual Design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DATA ANALYTICS ===== -->
+<section id="analytics">
+  <div class="bg-glow glow-cyan" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+  <div class="section-header">
+    <div class="section-label reveal">Data Analytics</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">Turning Data Into <span>Decisions</span></h2>
+    <p class="section-desc reveal" style="transition-delay:.2s">Leveraging AI &amp; Data Science expertise to build dashboards, extract insights, and drive data-informed product decisions.</p>
+  </div>
+  <div class="analytics-showcase">
+    <div class="reveal">
+      <p style="color:var(--text-muted);line-height:1.8;margin-bottom:28px;">
+        My B.Tech in Artificial Intelligence &amp; Data Science gives me a unique edge — I design not just with aesthetics in mind, but with data behind every decision. From building Power BI dashboards to writing Python scripts for data cleaning, I bridge the gap between design and analytics.
+      </p>
+      <div class="analytics-tools">
+        <div class="analytics-tool-card reveal">
+          <div class="atc-icon" style="background:rgba(255,209,102,.15);">📊</div>
+          <div><div class="atc-name">Power BI</div><div class="atc-desc">Interactive dashboards &amp; reports</div></div>
+        </div>
+        <div class="analytics-tool-card reveal" style="transition-delay:.08s">
+          <div class="atc-icon" style="background:rgba(0,212,255,.15);">🐍</div>
+          <div><div class="atc-name">Python</div><div class="atc-desc">Pandas, NumPy, Matplotlib</div></div>
+        </div>
+        <div class="analytics-tool-card reveal" style="transition-delay:.16s">
+          <div class="atc-icon" style="background:rgba(108,99,255,.15);">🗄️</div>
+          <div><div class="atc-name">SQL</div><div class="atc-desc">Data querying &amp; analysis</div></div>
+        </div>
+        <div class="analytics-tool-card reveal" style="transition-delay:.24s">
+          <div class="atc-icon" style="background:rgba(255,107,157,.15);">🤖</div>
+          <div><div class="atc-name">Machine Learning</div><div class="atc-desc">Predictive modeling basics</div></div>
+        </div>
+        <div class="analytics-tool-card reveal" style="transition-delay:.32s">
+          <div class="atc-icon" style="background:rgba(0,212,255,.15);">📈</div>
+          <div><div class="atc-name">Data Visualization</div><div class="atc-desc">Charts, KPIs &amp; storytelling</div></div>
+        </div>
+        <div class="analytics-tool-card reveal" style="transition-delay:.4s">
+          <div class="atc-icon" style="background:rgba(255,209,102,.15);">🔎</div>
+          <div><div class="atc-name">EDA</div><div class="atc-desc">Exploratory data analysis</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.2s">
+      <div class="analytics-stats">
+        <div class="as-card">
+          <div class="as-num">10+</div>
+          <div class="as-label">Dashboards Built</div>
+          <div class="mini-chart">
+            <div class="mc-bar" style="height:40%;animation-delay:.1s"></div>
+            <div class="mc-bar" style="height:65%;animation-delay:.2s"></div>
+            <div class="mc-bar" style="height:50%;animation-delay:.3s"></div>
+            <div class="mc-bar" style="height:80%;animation-delay:.4s"></div>
+            <div class="mc-bar" style="height:70%;animation-delay:.5s"></div>
+            <div class="mc-bar" style="height:95%;animation-delay:.6s"></div>
+          </div>
+        </div>
+        <div class="as-card">
+          <div class="as-num">3+</div>
+          <div class="as-label">Data Projects</div>
+          <div class="mini-chart">
+            <div class="mc-bar" style="height:30%;animation-delay:.15s"></div>
+            <div class="mc-bar" style="height:55%;animation-delay:.25s"></div>
+            <div class="mc-bar" style="height:75%;animation-delay:.35s"></div>
+            <div class="mc-bar" style="height:60%;animation-delay:.45s"></div>
+            <div class="mc-bar" style="height:85%;animation-delay:.55s"></div>
+            <div class="mc-bar" style="height:100%;animation-delay:.65s"></div>
+          </div>
+        </div>
+        <div class="as-card" style="grid-column:span 2;">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+            <div class="as-num" style="font-size:1.3rem;">AI &amp; DS</div>
+            <div style="font-size:.85rem;color:var(--text-muted);">B.Tech graduate specialized in Artificial Intelligence and Data Science — applying academic knowledge to real-world product decisions and analytics solutions.</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--accent3);padding:4px 12px;border-radius:20px;font-size:.75rem;">Data Mining</span>
+            <span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--accent3);padding:4px 12px;border-radius:20px;font-size:.75rem;">Statistical Analysis</span>
+            <span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--accent3);padding:4px 12px;border-radius:20px;font-size:.75rem;">Deep Learning Basics</span>
+            <span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--accent3);padding:4px 12px;border-radius:20px;font-size:.75rem;">NLP Fundamentals</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE ===== -->
+<section id="experience">
+  <div class="bg-glow glow-pink" style="width:400px;height:400px;top:0;right:0;"></div>
+  <div class="section-header">
+    <div class="section-label reveal">My Journey</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">Experience &amp; <span>Education</span></h2>
+  </div>
+  <div class="exp-grid">
+    <div class="reveal">
+      <div class="exp-section-title"><i class="fas fa-briefcase"></i> Work Experience</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="tc-company" style="color:var(--accent);">VEI Technologies</div>
+            <div class="tc-role">UI/UX Designer &amp; Technical Trainer</div>
+            <div class="tc-date"><i class="fas fa-calendar-alt"></i> Jan 2025 – Present · Current Role</div>
+            <div class="tc-desc">Passionate UI/UX Designer and Trainer crafting intuitive digital experiences and mentoring aspiring designers. Conduct user research, implement feedback loops, and train students on industry-standard design tools and workflows.</div>
+            <div class="tc-tags">
+              <span class="tc-tag" style="background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.2);color:var(--accent);">Figma</span>
+              <span class="tc-tag" style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--accent3);">Training</span>
+              <span class="tc-tag" style="background:rgba(255,107,157,.1);border:1px solid rgba(255,107,157,.2);color:var(--accent2);">UX Research</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--accent2);"></div>
+          <div class="timeline-card">
+            <div class="tc-company" style="color:var(--accent2);">Airtory Interactive</div>
+            <div class="tc-role">Design Intern</div>
+            <div class="tc-date"><i class="fas fa-calendar-alt"></i> Sep 2024 – Dec 2024</div>
+            <div class="tc-desc">Designed user-friendly interfaces for web and mobile apps. Created wireframes, prototypes, and high-fidelity designs using Figma and Adobe XD, collaborating with dev teams for seamless handoffs.</div>
+            <div class="tc-tags">
+              <span class="tc-tag" style="background:rgba(255,107,157,.1);border:1px solid rgba(255,107,157,.2);color:var(--accent2);">Adobe XD</span>
+              <span class="tc-tag" style="background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.2);color:var(--accent);">Prototyping</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:#a78bfa;"></div>
+          <div class="timeline-card">
+            <div class="tc-company" style="color:#a78bfa;">Redmind Technologies</div>
+            <div class="tc-role">UI/UX Designer Intern</div>
+            <div class="tc-date"><i class="fas fa-calendar-alt"></i> Dec 2023 – Apr 2024</div>
+            <div class="tc-desc">Designed user-friendly interfaces for web and mobile platforms, ensuring branding consistency across team deliverables. Conducted stakeholder feedback loops to iterate on designs and supported UI implementation alongside development teams.</div>
+            <div class="tc-tags">
+              <span class="tc-tag" style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);color:#a78bfa;">Figma</span>
+              <span class="tc-tag" style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);color:#a78bfa;">Branding</span>
+              <span class="tc-tag" style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);color:#a78bfa;">Certified</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--accent3);"></div>
+          <div class="timeline-card">
+            <div class="tc-company" style="color:var(--accent3);">Teckzy Research Analytics</div>
+            <div class="tc-role">Flutter Developer</div>
+            <div class="tc-date"><i class="fas fa-calendar-alt"></i> Apr 2024 – Jun 2024</div>
+            <div class="tc-desc">Developed dynamic mobile applications using Flutter, integrating REST APIs and Firebase for real-time data sync, user authentication, and cross-platform performance optimization.</div>
+            <div class="tc-tags">
+              <span class="tc-tag" style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--accent3);">Flutter</span>
+              <span class="tc-tag" style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--accent3);">Firebase</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.15s">
+      <div class="exp-section-title"><i class="fas fa-graduation-cap"></i> Education</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--accent4);"></div>
+          <div class="timeline-card">
+            <div class="tc-company" style="color:var(--accent4);">Muthayammal Engineering College</div>
+            <div class="tc-role">B.Tech — Artificial Intelligence &amp; Data Science</div>
+            <div class="tc-date"><i class="fas fa-calendar-alt"></i> 2020 – 2024</div>
+            <div class="tc-desc">Specialized in AI &amp; Data Science. Gained deep knowledge in machine learning, data analysis, neural networks, and software development — forming the analytical foundation of my design practice.</div>
+            <div class="tc-tags">
+              <span class="tc-tag" style="background:rgba(255,209,102,.1);border:1px solid rgba(255,209,102,.2);color:var(--accent4);">AI &amp; ML</span>
+              <span class="tc-tag" style="background:rgba(255,209,102,.1);border:1px solid rgba(255,209,102,.2);color:var(--accent4);">Data Science</span>
+              <span class="tc-tag" style="background:rgba(255,209,102,.1);border:1px solid rgba(255,209,102,.2);color:var(--accent4);">Python</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:#a78bfa;"></div>
+          <div class="timeline-card">
+            <div class="tc-company" style="color:#a78bfa;">Sarswathi Matric Hr. Sec. School</div>
+            <div class="tc-role">Higher Secondary Education (XII)</div>
+            <div class="tc-date"><i class="fas fa-calendar-alt"></i> 2018 – 2020</div>
+            <div class="tc-desc">Completed higher secondary with focus on Computer Science and Mathematics, building a strong technical foundation.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:#34d399;"></div>
+          <div class="timeline-card">
+            <div class="tc-company" style="color:#34d399;">Government Higher Secondary School</div>
+            <div class="tc-role">Secondary Education (X)</div>
+            <div class="tc-date"><i class="fas fa-calendar-alt"></i> 2014 – 2018</div>
+            <div class="tc-desc">Completed secondary education with distinction in science subjects. Early passion for computers and technology sparked here.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<section id="projects">
+  <div class="bg-glow glow-purple" style="width:500px;height:500px;bottom:0;right:-100px;"></div>
+  <div class="section-header">
+    <div class="section-label reveal">My Work</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">Featured <span>Projects</span></h2>
+    <p class="section-desc reveal" style="transition-delay:.2s">A selection of design, development, and analytics projects showcasing end-to-end product thinking.</p>
+  </div>
+  <div class="projects-filter reveal" style="transition-delay:.3s">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="uiux">UI/UX</button>
+    <button class="filter-btn" data-filter="dev">Dev</button>
+    <button class="filter-btn" data-filter="analytics">Analytics</button>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card" data-cat="dev uiux">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#667eea,#764ba2);">
+        <span class="thumb-icon">🛒</span>
+        <div class="thumb-overlay">
+          <a href="https://github.com/moha0808/e_commerceapp" class="thumb-overlay-btn"><i class="fab fa-github"></i></a>
+          <a href="https://github.com/moha0808/e_commerceapp" class="thumb-overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-cat" style="color:var(--accent);">Flutter · UI/UX</div>
+        <div class="project-name">E-Commerce App</div>
+        <div class="project-desc">Full-featured shopping app with product search, cart management, Firebase auth, and polished UI built with Flutter &amp; Dart.</div>
+        <div class="project-techs"><span class="project-tech">Flutter</span><span class="project-tech">Figma</span><span class="project-tech">Firebase</span></div>
+      </div>
+    </div>
+    <div class="project-card" data-cat="dev uiux">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#11998e,#38ef7d);">
+        <span class="thumb-icon">🖨️</span>
+        <div class="thumb-overlay">
+          <a href="https://github.com/moha0808/e_cloneport" class="thumb-overlay-btn"><i class="fab fa-github"></i></a>
+          <a href="https://github.com/moha0808/e_cloneport" class="thumb-overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-cat" style="color:#38ef7d;">Flutter · Location</div>
+        <div class="project-name">Clone Port E-Stationary</div>
+        <div class="project-desc">Connects users to nearby printing &amp; document shops. Features location services, service browsing, and seamless order flow.</div>
+        <div class="project-techs"><span class="project-tech">Flutter</span><span class="project-tech">Maps API</span><span class="project-tech">UX Research</span></div>
+      </div>
+    </div>
+    <div class="project-card" data-cat="dev">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#f093fb,#f5576c);">
+        <span class="thumb-icon">⏰</span>
+        <div class="thumb-overlay">
+          <a href="https://github.com/moha0808/DailyRemainder" class="thumb-overlay-btn"><i class="fab fa-github"></i></a>
+          <a href="https://github.com/moha0808/DailyRemainder" class="thumb-overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-cat" style="color:#f093fb;">Flutter · Animations</div>
+        <div class="project-name">Daily Reminder App</div>
+        <div class="project-desc">Customizable reminder app featuring animated clock widgets, category-based reminders, and smooth notification system.</div>
+        <div class="project-techs"><span class="project-tech">Flutter</span><span class="project-tech">Animations</span><span class="project-tech">Local DB</span></div>
+      </div>
+    </div>
+    <div class="project-card" data-cat="uiux">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#56ab2f,#a8e063);">
+        <span class="thumb-icon">🍵</span>
+        <div class="thumb-overlay">
+          <a href="https://www.figma.com/design/4vfnOfbsOHZbWPuJWwtMPt/Tea-Brands" class="thumb-overlay-btn"><i class="fab fa-figma"></i></a>
+          <a href="https://www.figma.com/design/4vfnOfbsOHZbWPuJWwtMPt/Tea-Brands" class="thumb-overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-cat" style="color:#a8e063;">Figma · Branding</div>
+        <div class="project-name">Tea Brands Website</div>
+        <div class="project-desc">Brand-focused website design for premium tea brands highlighting heritage, sourcing, and digital engagement for tea lovers.</div>
+        <div class="project-techs"><span class="project-tech">Figma</span><span class="project-tech">UI Design</span><span class="project-tech">Branding</span></div>
+      </div>
+    </div>
+    <div class="project-card" data-cat="uiux">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#00c6ff,#0072ff);">
+        <span class="thumb-icon">📄</span>
+        <div class="thumb-overlay">
+          <a href="https://www.figma.com/design/ctqWs0MwUb1P2TLHLQtCvn/Redesign-clone-port" class="thumb-overlay-btn"><i class="fab fa-figma"></i></a>
+          <a href="https://www.figma.com/design/ctqWs0MwUb1P2TLHLQtCvn/Redesign-clone-port" class="thumb-overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-cat" style="color:#00c6ff;">Figma · Redesign</div>
+        <div class="project-name">Clone Port Redesign</div>
+        <div class="project-desc">Complete UI/UX redesign of the Clone Port app with improved information architecture, accessibility, and visual hierarchy.</div>
+        <div class="project-techs"><span class="project-tech">Figma</span><span class="project-tech">Prototyping</span><span class="project-tech">IA</span></div>
+      </div>
+    </div>
+    <div class="project-card" data-cat="uiux analytics">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#7b4397,#dc2430);">
+        <span class="thumb-icon">👤</span>
+        <div class="thumb-overlay">
+          <a href="https://www.figma.com/site/etWKMhjtfHhDr8J4zaNbYN/Mohan-Profile" class="thumb-overlay-btn"><i class="fab fa-figma"></i></a>
+          <a href="https://www.figma.com/site/etWKMhjtfHhDr8J4zaNbYN/Mohan-Profile" class="thumb-overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-cat" style="color:#dc2430;">Figma · Responsive</div>
+        <div class="project-name">Personal Portfolio Website</div>
+        <div class="project-desc">Responsive portfolio design — modern visuals, accessible color schemes, smooth animations, and clean layouts for all devices.</div>
+        <div class="project-techs"><span class="project-tech">Figma</span><span class="project-tech">Responsive</span><span class="project-tech">Accessibility</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="bg-glow glow-purple" style="width:400px;height:400px;top:-100px;left:-100px;"></div>
+  <div class="bg-glow glow-cyan" style="width:350px;height:350px;bottom:-100px;right:-100px;"></div>
+  <div class="section-header">
+    <div class="section-label reveal">Let's Connect</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">Got a Project? <span>Let's Talk</span></h2>
+    <p class="section-desc reveal" style="transition-delay:.2s">Open to design projects, training collaborations, data analytics work, and creative freelance opportunities.</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info-card reveal">
+      <div class="cic-title">Contact Details</div>
+      <div class="contact-item">
+        <div class="ci-icon"><i class="fas fa-phone"></i></div>
+        <div><div class="ci-label">Phone</div><div class="ci-val">+91 6383634491</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+        <div><div class="ci-label">Email</div><div class="ci-val">mohanasundars909@gmail.com</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon"><i class="fab fa-linkedin-in"></i></div>
+        <div><div class="ci-label">LinkedIn</div><div class="ci-val">mohanasundar-s-81b960220</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon"><i class="fab fa-github"></i></div>
+        <div><div class="ci-label">GitHub</div><div class="ci-val">github.com/moha0808</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon"><i class="fab fa-figma"></i></div>
+        <div><div class="ci-label">Figma</div><div class="ci-val">figma.com/@mohanasundar</div></div>
+      </div>
+      <div style="margin-top:28px;">
+        <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;">Follow Me</div>
+        <div class="socials-row">
+          <a href="https://www.linkedin.com/in/mohanasundar-s-81b960220/" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/moha0808" class="social-btn"><i class="fab fa-github"></i></a>
+          <a href="https://www.figma.com/proto/2OGZFAWPSXehujJeDSDnM7?node-id=0-1" class="social-btn"><i class="fab fa-figma"></i></a>
+          <a href="https://www.behance.net/20ad033mohansu" class="social-btn"><i class="fab fa-behance"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-card reveal" style="transition-delay:.15s">
+      <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:24px;">Send Me a Message</div>
+      <form id="contactForm">
+        <div class="form-row">
+          <div class="form-group"><label>Your Name *</label><input type="text" name="name" placeholder="John Doe" required></div>
+          <div class="form-group"><label>Email *</label><input type="email" name="email" placeholder="you@example.com" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Phone</label><input type="tel" name="phone" placeholder="+91 ..."></div>
+          <div class="form-group">
+            <label>Interested In</label>
+            <select name="interest">
+              <option>UI/UX Design</option>
+              <option>Technical Training</option>
+              <option>Data Analytics</option>
+              <option>Flutter Development</option>
+              <option>Collaboration</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group"><label>Subject *</label><input type="text" name="subject" placeholder="Project brief..." required></div>
+        <div class="form-group"><label>Message *</label><textarea name="message" placeholder="Tell me about your project..." required></textarea></div>
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span id="submitText">Send Message</span>
+          <div class="spinner" id="spinner"></div>
+          <i class="fas fa-arrow-right" id="arrow-icon"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Mohanasundar S.</div>
+  <div class="footer-text" style="margin-bottom:4px;">UI/UX Designer · Technical Trainer · Data Analyst</div>
+  <div class="footer-text" style="font-size:.78rem;color:var(--text-muted);opacity:.6;">Salem, Tamil Nadu, India</div>
+  <div class="footer-socials">
+    <a href="https://www.linkedin.com/in/mohanasundar-s-81b960220/" class="footer-social"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://github.com/moha0808" class="footer-social"><i class="fab fa-github"></i></a>
+    <a href="https://www.figma.com/proto/2OGZFAWPSXehujJeDSDnM7?node-id=0-1" class="footer-social"><i class="fab fa-figma"></i></a>
+    <a href="https://www.behance.net/20ad033mohansu" class="footer-social"><i class="fab fa-behance"></i></a>
+  </div>
+  <div class="footer-text" style="font-size:.8rem;">© 2026 Mohanasundar S. Crafted with MSR &amp; data.</div>
+</footer>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursor-trail');
+let mx=0, my=0;
+document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+setInterval(()=>{ trail.style.left=mx+'px'; trail.style.top=my+'px'; },50);
+
+// PROGRESS
+window.addEventListener('scroll',()=>{
+  const p=document.getElementById('progress');
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  p.style.width=(window.scrollY/h*100)+'%';
+  updateScrollNav();
+});
+
+// SCROLL NAV
+function updateScrollNav(){
+  const sections=['home','about','skills','uiux','analytics','experience','projects','contact'];
+  const dots=document.querySelectorAll('.sn-dot');
+  let curr='';
+  sections.forEach(id=>{ const el=document.getElementById(id); if(el&&window.scrollY>=el.offsetTop-200) curr=id; });
+  dots.forEach(d=>{ d.classList.toggle('active',d.dataset.target===curr); });
+}
+document.querySelectorAll('.sn-dot').forEach(d=>{ d.addEventListener('click',()=>{ smoothTo(d.dataset.target); }); });
+function smoothTo(id){ const el=document.getElementById(id); if(el) window.scrollTo({top:el.offsetTop-72,behavior:'smooth'}); }
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href').slice(1);
+    const el=document.getElementById(id);
+    if(el){ e.preventDefault(); window.scrollTo({top:el.offsetTop-72,behavior:'smooth'}); }
+  });
+});
+
+// REVEAL
+const revealIO = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); }); },{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>revealIO.observe(el));
+
+// TIMELINE REVEAL
+const tlIO = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); }); },{threshold:0.1});
+document.querySelectorAll('.timeline-item').forEach(el=>tlIO.observe(el));
+
+// PROJECT CARD REVEAL
+const pcIO = new IntersectionObserver(entries=>{ entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); } }); },{threshold:0.1});
+document.querySelectorAll('.project-card').forEach(el=>pcIO.observe(el));
+
+// PROJECTS FILTER
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    document.querySelectorAll('.project-card').forEach(card=>{
+      const cats=(card.dataset.cat||'');
+      card.style.display=(f==='all'||cats.includes(f))?'block':'none';
+    });
+  });
+});
+
+// MOBILE NAV
+document.getElementById('hamburger').addEventListener('click',()=>{ document.getElementById('mobileNav').classList.add('open'); });
+document.getElementById('mobileClose').addEventListener('click',()=>{ document.getElementById('mobileNav').classList.remove('open'); });
+function closeMobile(){ document.getElementById('mobileNav').classList.remove('open'); }
+
+// CONTACT FORM
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');
+  const txt=document.getElementById('submitText');
+  const spin=document.getElementById('spinner');
+  const arr=document.getElementById('arrow-icon');
+  txt.textContent='Sending...'; spin.style.display='block'; arr.style.display='none'; btn.disabled=true;
+  setTimeout(()=>{
+    txt.textContent='Send Message'; spin.style.display='none'; arr.style.display=''; btn.disabled=false;
+    this.reset();
+    showToast('Message sent! I\'ll get back to you soon. 🎉');
+  },2000);
+});
+function showToast(msg,err=false){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.className='toast'+(err?' error':'')+' show';
+  setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+// SKILLS TABS
+function animateSkillBars(panel) {
+  panel.querySelectorAll('.sbi-fill').forEach(fill => {
+    fill.classList.remove('animate');
+    void fill.offsetWidth;
+    const w = fill.dataset.w;
+    fill.style.transform = 'scaleX(0)';
+    setTimeout(() => { fill.style.transform = `scaleX(${w})`; fill.style.transition = 'transform 1.2s cubic-bezier(.23,1,.32,1)'; }, 60);
+  });
+}
+document.querySelectorAll('.stab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const id = 'panel-' + btn.dataset.stab;
+    document.querySelectorAll('.skills-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById(id);
+    if (panel) { panel.classList.add('active'); animateSkillBars(panel); }
+  });
+});
+// Animate bars on scroll into view
+const skillsBarIO = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { animateSkillBars(document.querySelector('.skills-panel.active')); skillsBarIO.disconnect(); } });
+}, { threshold: 0.2 });
+const skillsSec = document.getElementById('skills');
+if (skillsSec) skillsBarIO.observe(skillsSec);
+
+// MINI CHART ANIMATION
+const mcIO=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.mc-bar').forEach((b,i)=>{ b.style.animationDelay=(i*.1)+'s'; b.style.animationPlayState='running'; });
+    }
+  });
+},{threshold:.4});
+document.querySelectorAll('.mini-chart').forEach(el=>mcIO.observe(el));
+</script>
 </body>
 </html>
